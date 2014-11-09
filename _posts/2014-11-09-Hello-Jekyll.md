@@ -18,9 +18,11 @@ fi
 {% endhighlight %}
 
 ```bash
+<pre><code class="bash ">
 #!/bin/bash
 if [ ! -f /jekyll ]; then
   echo "Create Jekyll DIrectory"
   mkdir -p /Jekyll
 fi
+</code></pre>
 ```
