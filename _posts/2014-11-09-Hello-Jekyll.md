@@ -5,12 +5,22 @@ title: Hello World to Jekyll
 
 [This](http://legato.ninja) is a link!
 
-<pre><code class="bash">
-#!/bin/bash
-if [ ! -f /jekyll ]; then
-  echo "Create Jekyll DIrectory"
-  mkdir -p /Jekyll
-fi
+<pre><code class="css">
+@font-face {
+  font-family: Chunkfive; src: url('Chunkfive.otf');
+}
+
+body, .usertext {
+  color: #F0F0F0; background: #600;
+  font-family: Chunkfive, sans;
+}
+
+@import url(print.css);
+@media print {
+  a[href^=http]::after {
+    content: attr(href)
+  }
+}
 </code></pre>
 
 Here is a Gist <del>test</del>
