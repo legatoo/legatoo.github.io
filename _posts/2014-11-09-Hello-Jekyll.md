@@ -5,7 +5,7 @@ title: Hello World to Jekyll
 
 [This](http://legato.ninja) is my awesome personal website!
 
-  > I don't want to die without scare. 
+  > I don't want to die without scare.
 
 中文会不会也可以。世界你好！！！
 
@@ -17,3 +17,10 @@ if [ ! -f /jekyll ]; then
 fi
 {% endhighlight %}
 
+```bash
+#!/bin/bash
+if [ ! -f /jekyll ]; then
+  echo "Create Jekyll DIrectory"
+  mkdir -p /Jekyll
+fi
+```
