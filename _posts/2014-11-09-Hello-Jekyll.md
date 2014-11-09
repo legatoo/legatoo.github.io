@@ -9,20 +9,10 @@ title: Hello World to Jekyll
 
 中文会不会也可以。世界你好！！！
 
-{% highlight bash lineos %}
-#!/bin/bash
-if [ ! -f /jekyll ]; then
-	echo "Create Jekyll DIrectory"
-	mkdir -p /Jekyll
-fi
-{% endhighlight %}
-
-```bash
-<pre><code class="bash ">
+<pre><code class="bash">
 #!/bin/bash
 if [ ! -f /jekyll ]; then
   echo "Create Jekyll DIrectory"
   mkdir -p /Jekyll
 fi
 </code></pre>
-```
