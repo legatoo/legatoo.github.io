@@ -3,10 +3,7 @@ layout: post
 title: Hello World to Jekyll
 ---
 
-[This](http://legato.ninja) is my awesome personal website!
-
-  > I don't want to die without scare.
-
+[This](http://legato.ninja) is a link!
 
 <pre><code class="bash">
 #!/bin/bash

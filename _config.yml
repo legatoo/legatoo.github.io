@@ -1,6 +1,6 @@
 # Dependencies
 markdown:         redcarpet
-highlighter:      pygments
+#highlighter:      pygments
 
 # Permalinks
 permalink:        pretty
@@ -8,7 +8,7 @@ relative_permalinks: true
 
 # Setup
 title:            Steven's Blog
-tagline:          'A Jekyll theme'
+tagline:          '--- I know too many Stevens.'
 description:      'I know too much love will kill you, but I have to love.'
 url:              http://legato.ninja
 baseurl:          http://legatoo.github.io/
@@ -18,6 +18,3 @@ author:
   url:            https://legato.ninja
 
 paginate:         5
-
-# Custom vars
-version:          2.1.0
