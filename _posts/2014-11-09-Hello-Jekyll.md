@@ -7,7 +7,6 @@ title: Hello World to Jekyll
 
   > I don't want to die without scare.
 
-中文会不会也可以。世界你好！！！
 
 <pre><code class="bash">
 #!/bin/bash
@@ -16,3 +15,7 @@ if [ ! -f /jekyll ]; then
   mkdir -p /Jekyll
 fi
 </code></pre>
+
+Here is a Gist <del>test</del>
+
+{% gist 5d1283a62574dbc60bd4 %}
