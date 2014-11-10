@@ -18,3 +18,9 @@ author:
   url:            https://legato.ninja
 
 paginate:         5
+github: [Repository metadata]
+
+gems:
+  - jekyll-mentions
+
+jekyll-mentions: https://twitter.com
