@@ -5,8 +5,7 @@ title: Hello World to Jekyll
 
 [This](http://legato.ninja) is a link!
 
-<pre><code class="css">
-@font-face {
+<pre><code class="css">@font-face {
   font-family: Chunkfive; src: url('Chunkfive.otf');
 }
 
