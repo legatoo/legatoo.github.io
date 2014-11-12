@@ -52,7 +52,7 @@ This will save you for typing `-R ssh` in `pdsh` & `pdcp` every time. After chan
 put `IP address:hostname` in you hosts file.
 <pre><code class="Bash">sudo vim /etc/hosts
 
-#should look like this
+should look like this
 127.0.0.1	localhost
 IP address	node1
 IP address	node2
@@ -159,7 +159,7 @@ You can define cluster topo in files. Yarn Install Script will read them in, and
 > <font color="Red">Note: </font>all hostanmes in these files are separated by ONE space
 
 ###5. Distribute Bash Startup Files
-In order to let Yarn running when your cluster starts up. Some environent variable should be `export`. There are multiple places can do this: `~/.bsshrc`, `~/.bash_profile`, ``/etc/profile`, and scripts in `/etc/profile.d`. First two are user-specific, and last two are global. But there are differences between last two places, the scripts in `/etc/profile.d/` are application-specific startup scripts, and it helps you organize system in modules which is much easy in terms of maintenance, see [more](http://unix.stackexchange.com/questions/64258/what-do-the-scripts-in-etc-profile-d-do).  So, we put the script in `/etc/profile.d`
+In order to let Yarn running when your cluster starts up. Some environent variable should be `export`. There are multiple places can do this: `~/.bsshrc`, `~/.bash_profile`, /etc/profile`, and scripts in `/etc/profile.d`. First two are user-specific, and last two are global. But there are differences between last two places, the scripts in `/etc/profile.d/` are application-specific startup scripts, and it helps you organize system in modules which is much easy in terms of maintenance, see [more](http://unix.stackexchange.com/questions/64258/what-do-the-scripts-in-etc-profile-d-do).  So, we put the script in `/etc/profile.d`
 
 <pre><code class="Bash">pdsh -w ^all_hosts  echo "export JAVA_HOME=$JAVA_HOME > /etc/profile.d/java.sh"
 pdsh -w ^all_hosts  echo "export HADOOP_HOME=$HADOOP_HOME > /etc/profile.d/hadoop.sh"
@@ -169,7 +169,7 @@ pdsh -w ^all_hosts  echo "export HADOOP_CONF_DIR=$HADOOP_CONF_DIR >> /etc/profil
 ###6. Create Directories Across Cluster for Yarn
 You can see these directories in the beginning of script:
 
-<pre><code="Bash">NN_DATA_DIR=/var/data/hadoop/hdfs/nn
+<pre><code class="Bash">NN_DATA_DIR=/var/data/hadoop/hdfs/nn
 SNN_DATA_DIR=/var/data/hadoop/hdfs/snn
 DN_DATA_DIR=/var/data/hadoop/hdfs/dn
 YARN_LOG_DIR=/var/log/hadoop/yarn
@@ -178,6 +178,7 @@ HADOOP_MAPRED_LOG_DIR=/var/log/hadoop/mapred
 YARN_PID_DIR=/var/run/hadoop/yarn
 HADOOP_PID_DIR=/var/run/hadoop/hdfs
 HADOOP_MAPRED_PID_DIR=/var/run/hadoop/mapred</code></pre>
+
 
 And scripts will `mkdir` for every line above. Because we'v set `sudo-passwd-less` before, the operations now are executed without password.
 
@@ -229,10 +230,10 @@ in every startup script, changes are also made for Ubuntu.
 Hadoop services will be treated as daemons, and services are going to be started just like you start a normal service. By doing this. We need to register each service in OS, which brings the reason why we need to instasll `sysv-rc-conf` in the beginning. For more details about `sysv-rc-conf`, see [this](http://manpages.ubuntu.com/manpages/dapper/man8/sysv-rc-conf.8.html).
 
 <pre><code class="Bash">echo "Starting Hadoop $HADOOP_VERSION services on all hosts..."
-pdsh -w ^nn_host "chmod 755 /etc/init.d/hadoop-namenode && sudo sysv-rc-conf hadoop-namenod    e on && sudo service hadoop-namenode start"
-pdsh -w ^snn_host "chmod 755 /etc/init.d/hadoop-secondarynamenode && sudo sysv-rc-conf hado    op-secondarynamenode on && sudo service hadoop-secondarynamenode start"
-pdsh -w ^dn_hosts "chmod 755 /etc/init.d/hadoop-datanode && sudo sysv-rc-conf hadoop-datano    de on && sudo service hadoop-datanode pdsh -w ^rm_host "chmod 755 /etc/init.d/hadoop-resourcemanager && sudo sysv-rc-conf hadoop-    resourcemanager on && sudo service hadoop-resourcemanager start"
-pdsh -w ^nm_hosts "chmod 755 /etc/init.d/hadoop-nodemanager && sudo sysv-rc-conf hadoop-nod    emanager on && sudo service hadoop-nodemanager start"</code></pre>
+pdsh -w ^nn_host "chmod 755 /etc/init.d/hadoop-namenode && sudo sysv-rc-conf hadoop-namenode on && sudo service hadoop-namenode start"
+pdsh -w ^snn_host "chmod 755 /etc/init.d/hadoop-secondarynamenode && sudo sysv-rc-conf hadoop-secondarynamenode on && sudo service hadoop-secondarynamenode start"
+pdsh -w ^dn_hosts "chmod 755 /etc/init.d/hadoop-datanode && sudo sysv-rc-conf hadoop-datanode on && sudo service hadoop-datanode pdsh -w ^rm_host "chmod 755 /etc/init.d/hadoop-resourcemanager && sudo sysv-rc-conf hadoop-resourcemanager on && sudo service hadoop-resourcemanager start"
+pdsh -w ^nm_hosts "chmod 755 /etc/init.d/hadoop-nodemanager && sudo sysv-rc-conf hadoop-nodemanager on && sudo service hadoop-nodemanager start"</code></pre>
 
 ###11. Time for Smoke Test
 
