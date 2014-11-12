@@ -116,3 +116,5 @@ This tool is a replacement for `chkconfig` in CentOS.
 Download Hadoop from [here](http://hadoop.apache.org/releases.html#Download), and put in the same directory with scripts.
 
 ##What do scripts do
+
+###1. Set Hadoop version
