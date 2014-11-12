@@ -51,12 +51,11 @@ This will save you for typing `-R ssh` in `pdsh` & `pdcp` every time. After chan
 
 put `IP address:hostname` in you hosts file.
 <pre><code class="Bash">sudo vim /etc/hosts
-
 should look like this
 127.0.0.1	localhost
 IP address	node1
 IP address	node2
-IP address    node3
+IP address  node3
 ....</code></pre>
 
 generate ssh-key and distribute.
