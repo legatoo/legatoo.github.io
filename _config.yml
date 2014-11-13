@@ -27,4 +27,4 @@ gems:
 
 jekyll-mentions: https://twitter.com
 
-excerpt_separator: ""
+extensions: [fenced_code_blocks]
