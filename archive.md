@@ -2,6 +2,8 @@
 layout: page
 title: Archive
 ---
+
+
 <section id="archive">
   <h2>This year's posts</h2>
 {% for post in site.posts %}
@@ -20,9 +22,4 @@ title: Archive
 {% endfor %}
   </ul>
 
-  <pre><code class="Bash">sudo add-apt-repository ppa:webupd8team/java
-  sudo apt-get update
-  sudo apt-get install oracle-java7-installer
-  </code></pre>
-  
 </section>
