@@ -167,13 +167,15 @@ a.sidebar-nav-item:focus {
 }
 
 #archive ul{
-  margin-left:10px
+  margin-left:10px;
+  list-style-position: inside;
 }
 
 #archive ul li time{
   display:inline-block;
   font-family:"Monaco","Courier",monospace;
-  padding-right:10px
+  padding-right:10px;
+
 }
 
 /*#archive ul li time:after{
@@ -196,6 +198,7 @@ a.sidebar-nav-item:focus {
 
 #archive .this li:last-child{
     margin-bottom:0
+    margin-left:10px;
 }
 
 #archive .past{
