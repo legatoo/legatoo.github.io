@@ -13,7 +13,7 @@ Before the content, I would like to quote from *Optimizing LInux Performance* by
 >
 >Avoid repeating your own work.
 
-##Before Run the Scripts
+##<a name="section1" color="black"><font color="black">&#9824;&nbsp;&nbsp;Before Run the Scripts</font></a>
 
 ###1. Install Java
 Jave should be installed in every node in your cluster for Yarn to work. If you are using Ubuntu 14.04 just like me, the code below will install java for you. [More about install java](http://www.webupd8.org/2012/01/install-oracle-java-jdk-7-in-ubuntu-via.html)
@@ -120,8 +120,7 @@ This tool is a replacement for `chkconfig` in CentOS. [More Info](http://manpage
 Download Hadoop from [here](http://hadoop.apache.org/releases.html#Download), and put in the *same* directory with scripts.
 
 
-##How It Works
-
+##<a name="section2" color="black"><font color="black">&#9824;&nbsp;&nbsp;How It Works</font></a>
 This part explains some importants of script.
 
 ###1. Copy Hadoop Tarball to All Nodes, and Extract
@@ -243,9 +242,9 @@ Run a `pi` program in your new installed Yarn Cluster
 `3.14` delivers the greeting from Yarn.
 
 
-##How To Run
+##&#9824;&nbsp;&nbsp;How To Run
 
-This is the easy part. After you finish the work mentioned above. Simply do this in your terminal.
+This is the easy part. After you are clear about the work mentioned <a href="#section1">section1</a> and <a href="#section2">section2</a>. Simply do this in your terminal.
 
 <pre><code class="Bash">git clone https://github.com/legatoo/hadoop-install-scripts
 cd hadoop-install-scripts
