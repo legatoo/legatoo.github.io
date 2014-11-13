@@ -26,3 +26,5 @@ gems:
   - jekyll-mentions
 
 jekyll-mentions: https://twitter.com
+
+excerpt_separator: ""
