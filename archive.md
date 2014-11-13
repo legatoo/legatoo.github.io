@@ -19,4 +19,7 @@ title: Archive
 {% endfor %}
   </ul>
 
+<!-- pay attention to the LR TRIM issue.
+liquid tags should be followed tag <ul> tightly, without spaces. like line 11 -->
+
 </section>
