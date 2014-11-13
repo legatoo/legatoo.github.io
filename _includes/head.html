@@ -17,7 +17,6 @@
   <link rel="stylesheet" href="{{ site.baseurl }}public/css/poole.css">
   <link rel="stylesheet" href="{{ site.baseurl }}public/css/hyde.css">
   <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
-  <link rel="stylesheet" href="{{ site.baseurl }}lib/highlight/styles/monokai_sublime.css">
   <script type="text/javascript" src="{{site.baseurl}}lib/jquery-2.1.1.min.js"></script>
   <script type="text/javascript" src="{{site.baseurl}}lib/freezeframe.js">
       freezeframe_options = {
@@ -26,6 +25,7 @@
     }
   </script>
   {% if page.title != "Archive" %}
+  <link rel="stylesheet" href="{{ site.baseurl }}lib/highlight/styles/monokai_sublime.css">
   <script src="{{ site.baseurl }}lib/highlight/highlight.pack.js"></script>
   <script>hljs.initHighlightingOnLoad();</script>
   {% endif %}
