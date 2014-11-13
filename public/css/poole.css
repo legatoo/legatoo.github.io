@@ -230,8 +230,16 @@ blockquote p:last-child {
 img {
   display: block;
   max-width: 100%;
-  margin: 0 0 1rem;
+  /*margin: 0 0 1rem;*/
   border-radius: 5px;
+}
+
+figure {
+  display: block;
+}
+
+figure.freezeframe-container {
+	border-radius: 8px;
 }
 
 /* Tables */

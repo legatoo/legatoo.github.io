@@ -12,6 +12,8 @@ tagline:          '--- I know too many Stevens.'
 description:      'Too Much Love Will Kill You.'
 url:              http://legato.ninja
 baseurl:          http://legatoo.github.io/
+# baseurl:
+
 
 author:
   name:           'Steven Yifan Yang'
