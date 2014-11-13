@@ -176,10 +176,10 @@ a.sidebar-nav-item:focus {
   padding-right:10px
 }
 
-#archive ul li time:after{
+/*#archive ul li time:after{
   content:"•";
   padding-left:10px
-}
+}*/
 
 
 #archive .this{
