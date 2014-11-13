@@ -170,7 +170,7 @@ a.sidebar-nav-item:focus {
   margin-left:10px
 }
 
-#archive ul li time{
+/*#archive ul li time{
   display:inline-block;
   font-family:"Monaco","Courier",monospace;
   font-size:10px;
@@ -181,7 +181,7 @@ a.sidebar-nav-item:focus {
   content:"•";
   font-size:8px;
   padding-left:10px
-}
+}*/
 
 #archive .this{
   -webkit-border-radius:5px;

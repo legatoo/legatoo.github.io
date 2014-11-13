@@ -16,7 +16,13 @@ title: Archive
   <ul class="past">
   {% endif %}
   {% endunless %}
-    <li><time>{{ post.date | date:"%d %b" }}</time><a href="{{ post.url }}">&nbsp;&nbsp;&nbsp;{{ post.title }}</a></li>
+  <li><time>{{ post.date | date:"%d %b" }}</time><a href="{{ post.url }}">&nbsp;&nbsp;&nbsp;{{ post.title }}</a></li>
 {% endfor %}
   </ul>
+
+  <pre><code class="Bash">sudo add-apt-repository ppa:webupd8team/java
+  sudo apt-get update
+  sudo apt-get install oracle-java7-installer
+  </code></pre>
+  
 </section>
