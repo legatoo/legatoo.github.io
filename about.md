@@ -3,4 +3,7 @@ layout: page
 title: About
 ---
 
-The Content is invisible.....Kiddin. :)
+
+<img class="freezeframe" src="public/img/gif/giphy.gif" />
+
+<a href="mailto:yifan.yang9@gmail.com"> Contact me</a>
