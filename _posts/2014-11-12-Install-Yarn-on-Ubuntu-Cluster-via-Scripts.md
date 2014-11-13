@@ -189,9 +189,9 @@ put_config --file core-site.xml --property fs.defaultFS --value "hdfs://$nn:9000
 
 These XML files will be copied to all nodes.
 
-###8. Format Namenode
+###8. <a name="format_namenode"><font color="black">Format Namenode</font></a>
 
-The Namenode will be formated during installation. Please noted here assumes you have no HDFS exists, meaning `DN_DATA_DIR=/var/data/hadoop/hdfs/dn` should be empty, Otherwise, execute `uninstall_hadoop.sh` first.  <font color="red">Check how to use uninstall at the end this article</font>.
+The Namenode will be formated during installation. Please noted here assumes you have no HDFS exists, meaning `DN_DATA_DIR=/var/data/hadoop/hdfs/dn` should be empty, Otherwise, execute `uninstall_hadoop.sh` first.  <a href="#uninstall"><font color="red">Check how to use uninstall at the end this article</font></a>.
 
 >If there is HDFS filesystem exists, we suppose to have the prompt asking for command (Y/N) about if we want to re-format, but according to my test, pdsh can't redirect input to remote node, so that we don't know when should we input and even if we input (like ues *yes* command to periodically send yes to stdin), the remote node still can't receive it. As a result, the installation progress will hang there. That's where this assumption comes from.
 
@@ -251,7 +251,7 @@ cd hadoop-install-scripts
 source install-hadoop2.sh -f | tee log
 </code></pre>
 
-For `Uninstall`
+For <a name="uninstall"><font color="black">Uninstall</font></a><sup><a href="#format_namenode">&nbsp;back</a></sup>
 
 <pre><code class="Bash">source uninstall-hadoop2.sh</code></pre>
 
