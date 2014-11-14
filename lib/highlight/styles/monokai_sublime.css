@@ -11,8 +11,8 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
   background: #23241f;
   border-radius: 8px;
   -webkit-text-size-adjust: none;
-  max-width:  800px;
-  font-size: 0.8em;
+  max-width: 38rem;
+  font-size: 0.8rem;
   padding: 1rem;
   line-height: 1.1;
 }
