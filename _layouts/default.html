@@ -9,6 +9,183 @@
 
     <div itemscope itemtype="http://schema.org/Article" class="content container">
       {{ content }}
+
+      {% if page.title == "About" %}
+
+      <!-- <section id="map-canvas" style="width=800px, height=300px"></section> -->
+
+      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDMfQAjPENLFwDESJvDPvfcP53GjpLaOx4"
+      type="text/javascript"></script>
+      <script>
+
+            // Create an array of styles.
+            var styles = [
+                  {
+                      "featureType": "water",
+                      "elementType": "geometry",
+                      "stylers": [
+                          {
+                              "color": "#333739"
+                          }
+                      ]
+                  },
+                  {
+                      "featureType": "landscape",
+                      "elementType": "geometry",
+                      "stylers": [
+                          {
+                              "color": "#2ecc71"
+                          }
+                      ]
+                  },
+                  {
+                      "featureType": "poi",
+                      "stylers": [
+                          {
+                              "color": "#2ecc71"
+                          },
+                          {
+                              "lightness": -7
+                          }
+                      ]
+                  },
+                  {
+                      "featureType": "road.highway",
+                      "elementType": "geometry",
+                      "stylers": [
+                          {
+                              "color": "#2ecc71"
+                          },
+                          {
+                              "lightness": -28
+                          }
+                      ]
+                  },
+                  {
+                      "featureType": "road.arterial",
+                      "elementType": "geometry",
+                      "stylers": [
+                          {
+                              "color": "#2ecc71"
+                          },
+                          {
+                              "visibility": "on"
+                          },
+                          {
+                              "lightness": -15
+                          }
+                      ]
+                  },
+                  {
+                      "featureType": "road.local",
+                      "elementType": "geometry",
+                      "stylers": [
+                          {
+                              "color": "#2ecc71"
+                          },
+                          {
+                              "lightness": -18
+                          }
+                      ]
+                  },
+                  {
+                      "elementType": "labels.text.fill",
+                      "stylers": [
+                          {
+                              "color": "#ffffff"
+                          }
+                      ]
+                  },
+                  {
+                      "elementType": "labels.text.stroke",
+                      "stylers": [
+                          {
+                              "visibility": "off"
+                          }
+                      ]
+                  },
+                  {
+                      "featureType": "transit",
+                      "elementType": "geometry",
+                      "stylers": [
+                          {
+                              "color": "#2ecc71"
+                          },
+                          {
+                              "lightness": -34
+                          }
+                      ]
+                  },
+                  {
+                      "featureType": "administrative",
+                      "elementType": "geometry",
+                      "stylers": [
+                          {
+                              "visibility": "on"
+                          },
+                          {
+                              "color": "#333739"
+                          },
+                          {
+                              "weight": 0.8
+                          }
+                      ]
+                  },
+                  {
+                      "featureType": "poi.park",
+                      "stylers": [
+                          {
+                              "color": "#2ecc71"
+                          }
+                      ]
+                  },
+                  {
+                      "featureType": "road",
+                      "elementType": "geometry.stroke",
+                      "stylers": [
+                          {
+                              "color": "#333739"
+                          },
+                          {
+                              "weight": 0.3
+                          },
+                          {
+                              "lightness": 10
+                          }
+                      ]
+                  }
+              ],
+
+            // put your locations lat and long here
+            lat = 22.282999,
+            lng = 114.137085,
+            // Create a new StyledMapType object, passing it the array of styles,
+            // as well as the name to be displayed on the map type control.
+            styledMap = new google.maps.StyledMapType(styles,
+                {name: 'Styled Map'}),
+                // Create a map object, and include the MapTypeId to add
+                // to the map type control.
+                mapOptions = {
+                    zoom: 14,
+                    scrollwheel: false,
+                    center: new google.maps.LatLng( lat, lng ),
+                    mapTypeControlOptions: {
+                        mapTypeIds: [google.maps.MapTypeId.ROADMAP]
+                    }
+                },
+                map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions),
+                hku = new google.maps.LatLng( lat, lng ),
+                marker = new google.maps.Marker({
+                position: hku,
+                map: map,
+                title: "Steven is now @The University of Hong Kong"
+            });
+            //Associate the styled map with the MapTypeId and set it to display.
+            map.mapTypes.set('map_style', styledMap);
+            map.setMapTypeId('map_style');
+      </script>
+      {% endif %}
+
     </div>
 
   </body>

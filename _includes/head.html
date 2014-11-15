@@ -29,41 +29,6 @@
   <script src="{{ site.baseurl }}lib/highlight/highlight.pack.js"></script>
   <script>hljs.initHighlightingOnLoad();</script>
 
-  {% if page.title == "About" %}
-
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDMfQAjPENLFwDESJvDPvfcP53GjpLaOx4"
-  type="text/javascript"></script>
-  <style>
-    html, body, container, page, #map-canvas {
-      height: 100%;
-      margin: 0px;
-      padding: 0px
-    }
-  </style>
-  <script>
-          function initialize() {
-            var mapOptions = {
-              zoom: 8,
-              center: new google.maps.LatLng(22.3700556, 114.1535941)
-            };
-
-            var map = new google.maps.Map(document.getElementById('map-canvas'),
-                mapOptions);
-          }
-
-          function loadScript() {
-            var script = document.createElement('script');
-            script.type = 'text/javascript';
-            script.src = 'https://maps.googleapis.com/maps/api/js?v=3.exp&' +
-                'callback=initialize';
-            document.body.appendChild(script);
-          }
-
-          window.onload = loadScript;
-    </script>
-
-  {% endif %}
-
 
   <!-- Icons -->
   <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{ site.baseurl }}public/Icon-76@2x.png">
