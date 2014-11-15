@@ -163,22 +163,22 @@
             // as well as the name to be displayed on the map type control.
             styledMap = new google.maps.StyledMapType(styles,
                 {name: 'Styled Map'}),
-                // Create a map object, and include the MapTypeId to add
-                // to the map type control.
-                mapOptions = {
-                    zoom: 14,
-                    scrollwheel: false,
-                    center: new google.maps.LatLng( lat, lng ),
-                    mapTypeControlOptions: {
-                        mapTypeIds: [google.maps.MapTypeId.ROADMAP]
-                    }
-                },
-                map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions),
-                hku = new google.maps.LatLng( lat, lng ),
-                marker = new google.maps.Marker({
-                position: hku,
-                map: map,
-                title: "Steven is now @The University of Hong Kong"
+            // Create a map object, and include the MapTypeId to add
+            // to the map type control.
+            mapOptions = {
+                zoom: 15,
+                scrollwheel: false,
+                center: new google.maps.LatLng( lat, lng ),
+                mapTypeControlOptions: {
+                mapTypeIds: [google.maps.MapTypeId.ROADMAP]
+              }
+            },
+            map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions),
+            hku = new google.maps.LatLng( lat, lng ),
+            marker = new google.maps.Marker({
+            position: hku,
+            map: map,
+            title: "Steven is now @The University of Hong Kong"
             });
             //Associate the styled map with the MapTypeId and set it to display.
             map.mapTypes.set('map_style', styledMap);

@@ -6,7 +6,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
 
 .hljs {
   display: block;
-  overflow-x: hidden;
+  overflow-x: auto;
   padding: 0.8em;
   background: #23241f;
   border-radius: 8px;

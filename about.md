@@ -11,4 +11,4 @@ title: About
 <a href="mailto:yifan.yang9@gmail.com"> Contact me</a>
 
 
-<div id="map-canvas" style="width: 800px; height: 300px"></div>
+<section id="map-canvas" style="width: 500px; height: 200px"></section>
