@@ -254,7 +254,6 @@ tbody tr:nth-child(odd) th {
  */
 
 .container {
-  position: relative;
   padding-bottom: 75%; // This is the aspect ratio
   overflow: hidden;
   max-width: 38rem;
