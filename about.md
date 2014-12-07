@@ -3,7 +3,7 @@ layout: page
 title: About
 ---
 
-##About
+#About
 
 
 <img class="freezeframe" src="{{site.baseurl}}public/img/gif/giphy.gif" />
