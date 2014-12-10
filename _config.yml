@@ -11,7 +11,7 @@ title:            Steven's Blog
 tagline:          '--- I know too many Stevens.'
 description:      'Too Much Love Will Kill You.'
 url:              http://legato.ninja
-baseurl:          http://legatoo.github.io/
+baseurl:          http://legato.ninja/
 # baseurl:           /
 
 
@@ -22,9 +22,5 @@ author:
 paginate:         5
 github: [Repository metadata]
 
-gems:
-  - jekyll-mentions
-
-jekyll-mentions: https://twitter.com
 
 extensions: [fenced_code_blocks]
