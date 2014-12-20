@@ -58,11 +58,11 @@ title: Build Your Own Custom Domain Email Sever on DigitalOcean
 
 <p><img src="{{site.baseurl}}public/img/image/Postfix_architecture-640px.png"/></p>
 
-在我的机器Ubuntu14.04下使用下面的命令就可以完成安装，使用`DEBIAN_FRONTEND=noninteractive`将会跳过交互安装的环节，因为Postfix的配置可以之后通过修改配置文件完成。
+在我的机器Ubuntu14.04下使用下面的命令就可以完成安装，使用<span style="background-color: #23241f"><font color="white">`DEBIAN_FRONTEND=noninteractive`</font></span>将会跳过交互安装的环节，因为Postfix的配置可以之后通过修改配置文件完成。
 
 <pre><code class="Bash">sudo DEBIAN_FRONTEND=noninteractive　apt-get install postfix</code></pre>
 
-安装完成后，修改配置文件`／etc/postfix/main.cf`
+安装完成后，修改配置文件<span style="background-color: #23241f"><font color="white">`／etc/postfix/main.cf`</font></span>
 
 <pre><code class="Bash"># Host and site name.
 myhostname = example.com
@@ -73,7 +73,7 @@ myorigin = example.com
 virtual_alias_domains = legato.ninja
 virtual_alias_maps = hash:/etc/postfix/virtual</code></pre>
 
-myhostname与之前配置的DNS相匹配即可。Virtual Aliases指明了发往`virtual_alias_domains`的邮件将被转发至virtual文件定义的邮箱中去，因此下一步编辑`/etc/postfix/virtual`
+myhostname与之前配置的DNS相匹配即可。Virtual Aliases指明了发往`virtual_alias_domains`的邮件将被转发至virtual文件定义的邮箱中去，因此下一步编辑<span style="background-color: #23241f"><font color="white">`/etc/postfix/virtual`</font></span>
 
 <pre><code>#Format:
 #<mail_from_address>  <forward_to_address>
@@ -110,7 +110,7 @@ sudo postfix reload</code></pre>
 
 <pre><code class="Bash">sudo saslpasswd2 -c -u example.com smtp</code></pre>
 
-上面的命令会建立一个名为`smtp`的用户，用户名可以随意选择。完成后，在`/etc`下会出现一个保存用户名和密码的文件`sasldb2`
+上面的命令会建立一个名为`smtp`的用户，用户名可以随意选择。完成后，在<span style="background-color: #23241f"><font color="white">`/etc`</font></span>下会出现一个保存用户名和密码的文件`sasldb2`
 
 <pre><code class="Bash">~$ ls -l /etc/sasldb2
 -r-------- 1 postfix root 12288 Dec 12 05:01 /etc/sasldb2
@@ -125,7 +125,7 @@ sudo postfix reload</code></pre>
 <pre><code class="Bash">sudo chmod 400 /etc/sasldb2
 sudo chown postfix /etc/sasldb2</code></pre>
 
-修改配置文件`/etc/postfix/sasl/smtpd.conf`
+修改配置文件<span style="background-color: #23241f"><font color="white">`/etc/postfix/sasl/smtpd.conf`</font></span>
 
 <pre><code class="Bash"># /etc/postfix/sasl/smtpd.conf
 sasl_pwcheck_method: auxprop
@@ -141,16 +141,16 @@ openssl genrsa -des3 -out example.com.key 2048</code></pre>
 
 2. 生成SSH Key(private key)和Certificate Signing Request(csr)文件
 <pre><code class="Bash">openssl req -new -key example.com.key -out example.com.csr</code></pre>
-
-除了不要忘记这里输入的密码外，注意两点，1. 在Common Name那里输入你的域名地址（与`/etc/postfix/main.cf`中的`myhostname`同）; 2. 不用输入Challenge Password
+除了不要忘记这里输入的密码外，注意两点: 1)在Common Name那里输入你的域名地址（与<span style="background-color: #23241f"><font color="white">`/etc/postfix/main.cf`</font></span>中的`myhostname`同）; 2)不用输入Challenge Password
 
 3. 生成Self-signed的Certifacte
 </pre></code>openssl x509 -req -days 3650 -in example.csr -signkey example.com.key -out example.com.crt</code></pre>
 相关参数解释：
-+ x509 -req: 指明使用的CSR管理系统是<a href="http://en.wikipedia.org/wiki/X.509">X.509</a>
-+ -days: 该认证文件的有效期，以日位单位
-+ -in: 传入刚才创建的CSR文件
-+ -signkey: 传入刚才生成的秘钥
+
+> + x509 -req: 指明使用的CSR管理系统是<a href="http://en.wikipedia.org/wiki/X.509">X.509</a>
+> + -days: 该认证文件的有效期，以日位单位
+> + -in: 传入刚才创建的CSR文件
+> + -signkey: 传入刚才生成的秘钥
 
 4. 移除生成的秘钥上的密码
 对于邮件系统这样的守护程序，在机器遇到意外重启后，我们希望在无人值守的情况下恢复工作，所以不可能每次都人为输入密码。
@@ -211,7 +211,7 @@ root      1257  0.0  0.1  25344  1700 ?        Ss   Dec14   0:02 /usr/lib/postfi
 
 <p><img src="{{site.baseurl}}public/img/image/Gmail_verfication1.png"/></p>
 
-<p><img src="{{site.baseurl}}public/img/image/Gmail_verfication２.png"/></p>
+<p><img src="{{site.baseurl}}public/img/image/Gmail_verfication2.png"/></p>
 
 如果一切正确，你会收到一封验证邮件。否则的话，查看log文件查看问题。
 
