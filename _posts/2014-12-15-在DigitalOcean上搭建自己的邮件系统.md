@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Build Your Own Custom Domain Email Sever on DigitalOcean
+title: 在DigitalOcean上搭建自己的邮件系统
 ---
 一封从自己的域名发出的邮件，对于开发者来说，是一份最好的自我介绍。在两位博主的文章以及维基的帮助下，上周在DigitalOcean搭建了自己的邮件系统，中间学到不少东西，特此记录下来。
 
