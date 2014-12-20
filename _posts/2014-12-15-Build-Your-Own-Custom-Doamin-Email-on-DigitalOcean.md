@@ -52,12 +52,12 @@ title: Build Your Own Custom Domain Email Sever on DigitalOcean
 另外需要注意的是Droplet的名字和你的域名是一致的，这样才能获得一个正确的PTR记录。在DNS传播的同时，继续下面的配置。
 
 ##转发邮件到配置的邮箱
-<br></br>
+
 我们的邮件服务需要使用一款优秀的开源软件来实现，<a href="http://www.postfix.org/start.html">Postfix</a>。
 
 <p><img src="{{site.baseurl}}public/img/image/Postfix_architecture-640px.png"/></p>
 
-在我的机器Ubuntu14.04下使用下面的命令就可以完成安装，使用｀DEBIAN_FRONTEND=noninteractive｀将会跳过交互安装的环节，因为Postfix的配置可以之后通过修改配置文件完成。
+在我的机器Ubuntu14.04下使用下面的命令就可以完成安装，使用`DEBIAN_FRONTEND=noninteractive`将会跳过交互安装的环节，因为Postfix的配置可以之后通过修改配置文件完成。
 
 <pre><code class="Bash">sudo DEBIAN_FRONTEND=noninteractive　apt-get install postfix</code><pre>
 安装完成后，修改配置文件`／etc/postfix/main.cf`
@@ -69,7 +69,7 @@ myorigin = example.com
 #Virtual aliases
 virtual_alias_domains = example.com
 virtual_alias_maps = hash:/etc/postfix/virtual</code><pre>
-myhostname与之前配置的DNS相匹配即可。Virtual Aliases指明了发往｀virtual_alias_domains｀的邮件将被转发至virtual文件定义的邮箱中去，因此下一步编辑`/etc/postfix/virtual`
+myhostname与之前配置的DNS相匹配即可。Virtual Aliases指明了发往`virtual_alias_domains`的邮件将被转发至virtual文件定义的邮箱中去，因此下一步编辑`/etc/postfix/virtual`
 <pre><code>#Format:
 #<mail_from_address>  <forward_to_address>
 me@example.com foo@gmail.com
@@ -87,8 +87,9 @@ sudo postfix reload</code></pre>
 
 ##邮件的发送
 
-这一部分会比之前的部分麻烦一下，我们需要把我们的邮件配置成为一个relay服务器，原因是我希望继续使用Gmail的管理界面，但是邮件的发送人又需要是我自己的邮箱，那么这封邮件就需要由Google先发送到我的邮件服务器，然后在进行转发。　Gmail和我们的转发服务器之间的交流是受加密保护的，因此这里使用到了TLS。　有关TLS是如何运作的，我推荐一下的几篇文章，看过之后会对这套系统有一个认识
-+ <a href="http://security.stackexchange.com/questions/20803/how-does-ssl-tls-work"> How does SSL/TLS Works?</a>
+这一部分会比之前的部分麻烦一下，我们需要把我们的邮件配置成为一个relay服务器，原因是我希望继续使用Gmail的管理界面，但是邮件的发送人又需要是我自己的邮箱，那么这封邮件就需要由Google先发送到我的邮件服务器，然后在进行转发。　Gmail和我们的转发服务器之间的交流是受加密保护的，因此这里使用到了TLS。　有关TLS是如何运作的，我推荐一下的几篇文章，看过之后会对这套系统有一个认识:
+
++ <a href="http://security.stackexchange.com/questions/20803/how-does-ssl-tls-work">How does SSL/TLS Works?</a>
 + <a href="http://en.wikipedia.org/wiki/Transport_Layer_Security">Transport Layer Security</a>
 + <a href="http://en.wikipedia.org/wiki/Public-key_cryptography">Public-key cryptography</a>
 
@@ -170,7 +171,7 @@ postconf -e 'smtpd_tls_cert_file = /etc/ssl/certs/example.com.crt'
 postconf -e 'smtpd_tls_CAfile = /etc/ssl/certs/cacert.pem'
 postconf -e 'tls_random_source = dev:/dev/urandom'</code></pre>
 
-配置Postfix使之支持Gmail邮件转发，编辑`/etc/postfix/master.cf`,　打开如下内容，注意submission那一行的第三个选项，也就是chroot设置位｀n｀
+配置Postfix使之支持Gmail邮件转发，编辑`/etc/postfix/master.cf`,　打开如下内容，注意submission那一行的第三个选项，也就是chroot设置位`n`
 
 <pre><code class="Bash">submission inet n       -       n       -       -       smtpd
   -o syslog_name=postfix/submission
