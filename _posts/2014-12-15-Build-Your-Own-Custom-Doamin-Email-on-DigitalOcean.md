@@ -58,11 +58,11 @@ title: Build Your Own Custom Domain Email Sever on DigitalOcean
 
 <p><img src="{{site.baseurl}}public/img/image/Postfix_architecture-640px.png"/></p>
 
-在我的机器Ubuntu14.04下使用下面的命令就可以完成安装，使用<span style="background-color: #2EFEF7"><font color="white">`DEBIAN_FRONTEND=noninteractive`</font></span>将会跳过交互安装的环节，因为Postfix的配置可以之后通过修改配置文件完成。
+在我的机器Ubuntu14.04下使用下面的命令就可以完成安装，使用<span style="background-color: #848484"><font color="white">`DEBIAN_FRONTEND=noninteractive`</font></span>将会跳过交互安装的环节，因为Postfix的配置可以之后通过修改配置文件完成。
 
 <pre><code class="Bash">sudo DEBIAN_FRONTEND=noninteractive　apt-get install postfix</code></pre>
 
-安装完成后，修改配置文件<span style="background-color: #2EFEF7"><font color="white">`／etc/postfix/main.cf`</font></span>
+安装完成后，修改配置文件<span style="background-color: #848484"><font color="white">`／etc/postfix/main.cf`</font></span>
 
 <pre><code class="Bash"># Host and site name.
 myhostname = example.com
@@ -73,7 +73,7 @@ myorigin = example.com
 virtual_alias_domains = legato.ninja
 virtual_alias_maps = hash:/etc/postfix/virtual</code></pre>
 
-myhostname与之前配置的DNS相匹配即可。Virtual Aliases指明了发往`virtual_alias_domains`的邮件将被转发至virtual文件定义的邮箱中去，因此下一步编辑<span style="background-color: #2EFEF7"><font color="white">`/etc/postfix/virtual`</font></span>
+myhostname与之前配置的DNS相匹配即可。Virtual Aliases指明了发往`virtual_alias_domains`的邮件将被转发至virtual文件定义的邮箱中去，因此下一步编辑<span style="background-color: #848484"><font color="white">`/etc/postfix/virtual`</font></span>
 
 <pre><code>#Format:
 #<mail_from_address>  <forward_to_address>
@@ -111,7 +111,7 @@ sudo postfix reload</code></pre>
 
 <pre><code class="Bash">sudo saslpasswd2 -c -u example.com smtp</code></pre>
 
-上面的命令会建立一个名为`smtp`的用户，用户名可以随意选择。完成后，在<span style="background-color: #2EFEF7"><font color="white">`/etc`</font></span>下会出现一个保存用户名和密码的文件`sasldb2`
+上面的命令会建立一个名为`smtp`的用户，用户名可以随意选择。完成后，在<span style="background-color: #848484"><font color="white">`/etc`</font></span>下会出现一个保存用户名和密码的文件`sasldb2`
 
 <pre><code class="Bash">~$ ls -l /etc/sasldb2
 -r-------- 1 postfix root 12288 Dec 12 05:01 /etc/sasldb2
@@ -126,7 +126,7 @@ sudo postfix reload</code></pre>
 <pre><code class="Bash">sudo chmod 400 /etc/sasldb2
 sudo chown postfix /etc/sasldb2</code></pre>
 
-修改配置文件<span style="background-color: #2EFEF7"><font color="white">`/etc/postfix/sasl/smtpd.conf`</font></span>
+修改配置文件<span style="background-color: #848484"><font color="white">`/etc/postfix/sasl/smtpd.conf`</font></span>
 
 <pre><code class="Bash"># /etc/postfix/sasl/smtpd.conf
 sasl_pwcheck_method: auxprop
@@ -142,7 +142,7 @@ openssl genrsa -des3 -out example.com.key 2048</code></pre>
 
 2. 生成SSH Key(private key)和Certificate Signing Request(csr)文件
 <pre><code class="Bash">openssl req -new -key example.com.key -out example.com.csr</code></pre>
-除了不要忘记这里输入的密码外，注意两点: [1]在Common Name那里输入你的域名地址（与<span style="background-color: #2EFEF7"><font color="white">/etc/postfix/main.cf</font></span>中的`myhostname`同） [2]不用输入Challenge Password
+除了不要忘记这里输入的密码外，注意两点: [1]在Common Name那里输入你的域名地址（与<span style="background-color: #848484"><font color="white">/etc/postfix/main.cf</font></span>中的`myhostname`同） [2]不用输入Challenge Password
 
 3. 生成Self-signed的Certifacte
 </pre><code class="Bash">openssl x509 -req -days 3650 -in example.csr -signkey example.com.key -out example.com.crt</code></pre>
@@ -178,7 +178,7 @@ postconf -e 'smtpd_tls_cert_file = /etc/ssl/certs/example.com.crt'
 postconf -e 'smtpd_tls_CAfile = /etc/ssl/certs/cacert.pem'
 postconf -e 'tls_random_source = dev:/dev/urandom'</code></pre>
 
-配置Postfix使之支持Gmail邮件转发，编辑<span style="background-color: #2EFEF7"><font color="white">`/etc/postfix/master.cf`</font></span>,　打开如下内容，注意submission那一行的第三个选项，也就是chroot设置位<span style="background-color: #2EFEF7"><font color="white">`n`</font></span>
+配置Postfix使之支持Gmail邮件转发，编辑<span style="background-color: #848484"><font color="white">`/etc/postfix/master.cf`</font></span>,　打开如下内容，注意submission那一行的第三个选项，也就是chroot设置位<span style="background-color: #848484"><font color="white">`n`</font></span>
 
 <pre><code class="Bash">submission inet n       -       n       -       -       smtpd
   -o syslog_name=postfix/submission
