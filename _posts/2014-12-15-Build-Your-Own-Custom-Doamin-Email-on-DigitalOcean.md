@@ -136,13 +136,13 @@ log_level: 7</code></pre>
 
 ###生成认证所需的公钥密钥
 
-<span style="background-color: #2EFEF7"><font color="white">1</font></span>. 生成所需的秘钥（记住所输入的秘钥）
+1. 生成所需的秘钥（记住所输入的秘钥）
 <pre><code class="Bash">cd
 openssl genrsa -des3 -out example.com.key 2048</code></pre>
 
 2. 生成SSH Key(private key)和Certificate Signing Request(csr)文件
 <pre><code class="Bash">openssl req -new -key example.com.key -out example.com.csr</code></pre>
-除了不要忘记这里输入的密码外，注意两点: [1]在Common Name那里输入你的域名地址（与<span style="background-color: #2EFEF7"><font color="white">`/etc/postfix/main.cf`</font></span>中的`myhostname`同） [2]不用输入Challenge Password
+除了不要忘记这里输入的密码外，注意两点: [1]在Common Name那里输入你的域名地址（与<span style="background-color: #2EFEF7"><font color="white">/etc/postfix/main.cf</font></span>中的`myhostname`同） [2]不用输入Challenge Password
 
 3. 生成Self-signed的Certifacte
 </pre><code class="Bash">openssl x509 -req -days 3650 -in example.csr -signkey example.com.key -out example.com.crt</code></pre>
