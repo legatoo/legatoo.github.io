@@ -229,3 +229,9 @@ pdsh -w ^nn_host "chmod 755 /etc/init.d/hadoop-namenode && sudo sysv-rc-conf had
 pdsh -w ^snn_host "chmod 755 /etc/init.d/hadoop-secondarynamenode && sudo sysv-rc-conf hadoop-secondarynamenode on && sudo service hadoop-secondarynamenode start"
 pdsh -w ^dn_hosts "chmod 755 /etc/init.d/hadoop-datanode && sudo sysv-rc-conf hadoop-datanode on && sudo service hadoop-datanode pdsh -w ^rm_host "chmod 755 /etc/init.d/hadoop-resourcemanager && sudo sysv-rc-conf hadoop-resourcemanager on && sudo service hadoop-resourcemanager start"
 pdsh -w ^nm_hosts "chmod 755 /etc/init.d/hadoop-nodemanager && sudo sysv-rc-conf hadoop-nodemanager on && sudo service hadoop-nodemanager start"</code></pre>
+
+###11. Time for Smoke Test
+
+Run a `pi` program in your new installed Yarn Cluster
+
+<pre><code bash="Bash">hadoop jar $HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-examples-$HADOOP_VERSION.jar pi -Dmapreduce.clientfactory.class.name=org.apache.hadoop.mapred.YarnClientFactory -libjars $HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-client-jobclient-$HADOOP_VERSION.jar 16 10000</code></pre>
