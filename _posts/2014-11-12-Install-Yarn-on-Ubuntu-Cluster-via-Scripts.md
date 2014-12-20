@@ -118,3 +118,39 @@ This tool is a replacement for `chkconfig` in CentOS. [More Info](http://manpage
 ###7. Download Hadoop pre-build Tarball
 
 Download Hadoop from [here](http://hadoop.apache.org/releases.html#Download), and put in the *same* directory with scripts.
+
+##<a name="section2" color="black"><font color="black">&#9824;&nbsp;&nbsp;How It Works</font></a>
+This part explains some importants of script.
+
+###1. Copy Hadoop Tarball to All Nodes, and Extract
+<pre><code class="Bash">if [ ! -f /opt/hadoop-"$HADOOP_VERSION".tar.gz ]; then
+    echo "Copying Hadoop $HADOOP_VERSION to all hosts..."
+    pdcp -w ^all_hosts hadoop-"$HADOOP_VERSION".tar.gz /opt
+else
+    echo "Hadoop $HADOOP_VERSION is there already to be extracted."
+fi
+
+pdsh -w ^all_hosts tar -zxf /opt/hadoop-"$HADOOP_VERSION".tar.gz -C /opt</code></pre>
+
+###2. Set Hadoop Version
+At the beginning of this script, `HADOOP_VERSION` can be changed according to your Hadoop version. I tested with *Hadoop 2.5.1*.
+
+<pre><code class="Bash">HADOOP_VERSION=2.5.1
+</code></pre>
+
+###3. Set JAVA_HOME Location
+<pre><code class="Bash">JAVA_HOME=/usr/lib/jvm/java-7-oracle/
+</code></pre>
+
+###4. Define Your Cluster Topo
+You can define cluster topo in files. Yarn Install Script will read them in, and confingure the cluster as you wish. THe meaning of each files are listed below.
+
+*  *nn_host*: HDFS Namenode hostname
+*  *rm_host*: YARN ResourceManager hostname
+*  *snn_host*: HDFS SecondNameNode hostname
+*  *mr_history_host*: MapReduce Job History server hostname
+*  *yarn_proxy_host*: YARN Web Proxy hostname
+*  *nm_hosts*:  YARN NodeManager hostnames
+*  *dn_hosts*:  HDFS DataNode hostnames
+
+> <font color="Red">Note: </font>all hostanmes in these files are separated by ONE space
