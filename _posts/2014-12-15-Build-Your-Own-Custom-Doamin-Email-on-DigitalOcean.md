@@ -70,7 +70,7 @@ mydomain = example.com
 myorigin = example.com
 
 #Virtual aliases
-virtual_alias_domains = legato.ninja
+virtual_alias_domains = example.com
 virtual_alias_maps = hash:/etc/postfix/virtual</code></pre>
 
 myhostname与之前配置的DNS相匹配即可。Virtual Aliases指明了发往virtual_alias_domains的邮件将被转发至virtual文件定义的邮箱中去，因此下一步编辑<span style="background-color: #084B8A"><font color="white">/etc/postfix/virtual</font></span>
