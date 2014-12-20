@@ -219,3 +219,13 @@ the code below is commented out, since it works under CentOS
 </code></pre>
 
 in every startup script, changes are also made for Ubuntu.
+
+###10. Start up Hadoop Services
+
+Hadoop services will be treated as daemons, and services are going to be started just like you start a normal service. By doing this. We need to register each service in OS, which brings the reason why we need to instasll `sysv-rc-conf` in the beginning. For more details about `sysv-rc-conf`, see [this](http://manpages.ubuntu.com/manpages/dapper/man8/sysv-rc-conf.8.html).
+
+<pre><code class="Bash">echo "Starting Hadoop $HADOOP_VERSION services on all hosts..."
+pdsh -w ^nn_host "chmod 755 /etc/init.d/hadoop-namenode && sudo sysv-rc-conf hadoop-namenode on && sudo service hadoop-namenode start"
+pdsh -w ^snn_host "chmod 755 /etc/init.d/hadoop-secondarynamenode && sudo sysv-rc-conf hadoop-secondarynamenode on && sudo service hadoop-secondarynamenode start"
+pdsh -w ^dn_hosts "chmod 755 /etc/init.d/hadoop-datanode && sudo sysv-rc-conf hadoop-datanode on && sudo service hadoop-datanode pdsh -w ^rm_host "chmod 755 /etc/init.d/hadoop-resourcemanager && sudo sysv-rc-conf hadoop-resourcemanager on && sudo service hadoop-resourcemanager start"
+pdsh -w ^nm_hosts "chmod 755 /etc/init.d/hadoop-nodemanager && sudo sysv-rc-conf hadoop-nodemanager on && sudo service hadoop-nodemanager start"</code></pre>
