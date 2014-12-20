@@ -145,12 +145,12 @@ openssl genrsa -des3 -out example.com.key 2048</code></pre>
 除了不要忘记这里输入的密码外，注意两点: [1]在Common Name那里输入你的域名地址（与<span style="background-color: #084B8A"><font color="white">/etc/postfix/main.cf</font></span>中的myhostname同） [2]不用输入Challenge Password
 
 3. 生成Self-signed的Certifacte
-</pre><code class="Bash">openssl x509 -req -days 3650 -in example.csr -signkey example.com.key -out example.com.crt</code></pre>
+<pre><code class="Bash">openssl x509 -req -days 3650 -in example.csr -signkey example.com.key -out example.com.crt</code></pre>
 相关参数解释：
-> + x509 -req: 指明使用的CSR管理系统是<a href="http://en.wikipedia.org/wiki/X.509">X.509</a>
-> + -days: 该认证文件的有效期，以日位单位
-> + -in: 传入刚才创建的CSR文件
-> + -signkey: 传入刚才生成的秘钥
++ x509 -req: 指明使用的CSR管理系统是<a href="http://en.wikipedia.org/wiki/X.509">X.509</a>
++ -days: 该认证文件的有效期，以日位单位
++ -in: 传入刚才创建的CSR文件
++ -signkey: 传入刚才生成的秘钥
 
 4. 移除生成的秘钥上的密码
 对于邮件系统这样的守护程序，在机器遇到意外重启后，我们希望在无人值守的情况下恢复工作，所以不可能每次都人为输入密码。
@@ -178,7 +178,7 @@ postconf -e 'smtpd_tls_cert_file = /etc/ssl/certs/example.com.crt'
 postconf -e 'smtpd_tls_CAfile = /etc/ssl/certs/cacert.pem'
 postconf -e 'tls_random_source = dev:/dev/urandom'</code></pre>
 
-配置Postfix使之支持Gmail邮件转发，编辑<span style="background-color: #084B8A"><font color="white">/etc/postfix/master.cf</font></span>,　打开如下内容，注意submission那一行的第三个选项，也就是chroot设置位<span style="background-color: #084B8A"><font color="white">n</font></span>
+配置Postfix使之支持Gmail邮件转发，编辑<span style="background-color: #084B8A"><font color="white">/etc/postfix/master.cf</font></span>,　打开如下内容，注意submission那一行的第三个选项，也就是chroot设置位<span style="background-color: #084B8A"><font color="white"> n</font></span>
 
 <pre><code class="Bash">submission inet n       -       n       -       -       smtpd
   -o syslog_name=postfix/submission
@@ -215,8 +215,7 @@ root      1257  0.0  0.1  25344  1700 ?        Ss   Dec14   0:02 /usr/lib/postfi
 
 如果一切正确，你会收到一封验证邮件。否则的话，查看log文件查看问题。
 
-<a href="http://seasonofcode.com/posts/custom-domain-e-mails-with-postfix-and-gmail-the-missing-tutorial.html">Reference#1</a>
-
+<a href="http://seasonofcode.com/posts/custom-domain-e-mails-with-postfix-and-gmail-the-missing-tutorial.html">Reference#1</a>,
 <a href="http://www.e-rave.nl/create-a-self-signed-ssl-key-for-postfix">Reference#2</a>
 
 Cheers,
