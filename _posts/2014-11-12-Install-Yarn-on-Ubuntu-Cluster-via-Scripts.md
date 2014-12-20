@@ -201,3 +201,21 @@ sed -i "s|\${JAVA_HOME}|$JAVA_HOME|g" $HADOOP_HOME/etc/hadoop/hadoop-env.sh
 
 pdcp -w ^all_hosts $HADOOP_HOME/etc/hadoop/hadoop-env.sh $HADOOP_HOME/etc/hadoop/
 pdsh -w ^nn_host "$HADOOP_HOME/bin/hdfs namenode -format"</code></pre>
+
+###9. Copy Startup Scripts to Nodes
+
+You don't want to start up Hadoop every time you start your machines, do you? The install scripts will allow hadoop to start with the OS booting up by put scripts in `/etc/init.d/`. So that hadoop services will be started as daemons in your systems.
+
+Note that, these scripts are modified to work under Ubuntu. Three lines below are added.
+
+<pre><code>source /etc/profile.d/hadoop.sh
+source /etc/profile.d/java.sh
+
+source /lib/lsb/init-functions
+#init-functions has the function to start daemon</code></pre>
+
+the code below is commented out, since it works under CentOS
+<pre><code class="Bash">source /etc/rc.d/init.d/functions
+</code></pre>
+
+in every startup script, changes are also made for Ubuntu.
