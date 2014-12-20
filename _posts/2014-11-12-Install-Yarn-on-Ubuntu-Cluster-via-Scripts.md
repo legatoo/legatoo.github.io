@@ -187,17 +187,3 @@ Hadoop is configured by some XML files which indicates different attributes of H
 put_config --file core-site.xml --property fs.defaultFS --value "hdfs://$nn:9000"</code></pre>
 
 These XML files will be copied to all nodes.
-
-###8. <a name="format_namenode"><font color="black">Format Namenode</font></a>
-
-The Namenode will be formated during installation. Please noted here assumes you have no HDFS exists, meaning `DN_DATA_DIR=/var/data/hadoop/hdfs/dn` should be empty, Otherwise, execute `uninstall_hadoop.sh` first.  <a href="#uninstall"><font color="red">Check how to use uninstall at the end this article</font></a>.
-
->If there is HDFS filesystem exists, we suppose to have the prompt asking for command (Y/N) about if we want to re-format, but according to my test, pdsh can't redirect input to remote node, so that we don't know when should we input and even if we input (like ues *yes* command to periodically send yes to stdin), the remote node still can't receive it. As a result, the installation progress will hang there. That's where this assumption comes from.
-
-One issue here is sometimes the JAVA_HOME can not be resolved correctly in `hadoop-env.sh`, so, we have to explicitly set it.
-
-<pre><code class="Bash">#in order to fix "JAVA_HOME not found issue"
-sed -i "s|\${JAVA_HOME}|$JAVA_HOME|g" $HADOOP_HOME/etc/hadoop/hadoop-env.sh
-
-pdcp -w ^all_hosts $HADOOP_HOME/etc/hadoop/hadoop-env.sh $HADOOP_HOME/etc/hadoop/
-pdsh -w ^nn_host "$HADOOP_HOME/bin/hdfs namenode -format"</code></pre>
