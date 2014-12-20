@@ -187,3 +187,7 @@ Hadoop is configured by some XML files which indicates different attributes of H
 put_config --file core-site.xml --property fs.defaultFS --value "hdfs://$nn:9000"</code></pre>
 
 These XML files will be copied to all nodes.
+
+###8. <a name="format_namenode"><font color="black">Format Namenode</font></a>
+
+The Namenode will be formated during installation. Please noted here assumes you have no HDFS exists, meaning `DN_DATA_DIR=/var/data/hadoop/hdfs/dn` should be empty, Otherwise, execute `uninstall_hadoop.sh` first.  <a href="#uninstall"><font color="red">Check how to use uninstall at the end this article</font></a>.
