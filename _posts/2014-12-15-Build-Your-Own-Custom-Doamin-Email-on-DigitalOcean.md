@@ -19,7 +19,7 @@ title: Build Your Own Custom Domain Email Sever on DigitalOcean
 
 <p><img src="{{site.baseurl}}public/img/image/SMTP-transfer-model-640px.png"/></p>
 
-上面的图片来自Wikipedia，描述了一封邮件传输过程中要经历的重要节点。MUA (Mail User Agent) 或许是到目前为止最为熟悉的部分。他可以是web-based的，像网页版的Gmail, 也可以是功能完整的桌面客户端，例如Outlook。当一封邮件编辑完成后，它会经由TCP587端口（大多数公司）被发往一个叫做MSA (Mail Submission Agent)的服务器, 由此邮件会被提交到下一站：MTA (Mail Transfer Agent). MSA和MTA通常是运行在不同参数配置下的相同的程序，例如我们下面即将配置的Postfix，他们可以是运行在同一台机器上，也可以时运行在不同的机器上。前者主要使用共享文件，后者则需要网络传输。好了，现在你的邮件应该已经到了MTA这一站，接下来即将由此进入I(i)nternet。MTA需要确定收件人的具体位置，这一过程通过DNS (Domain Name System)服务来完成，具体来说是一个叫做MX的DNS记录。
+上面的图片来自Wikipedia，描述了一封邮件传输过程中要经历的重要节点。MUA (Mail User Agent) 或许是到目前为止最为熟悉的部分。他可以是web-based的，像网页版的Gmail, 也可以是功能完整的桌面客户端，例如Outlook。当一封邮件编辑完成后，它会经由TCP587端口（大多数公司）被发往一个叫做MSA (Mail Submission Agent)的服务器, 由此邮件会被提交到下一站：MTA (Mail Transfer Agent)。 MSA和MTA通常是运行在不同参数配置下的相同的程序，例如我们下面即将配置的Postfix，他们可以是运行在同一台机器上，也可以时运行在不同的机器上。前者主要使用共享文件，后者则需要网络传输。好了，现在你的邮件应该已经到了MTA这一站，接下来即将由此进入I(i)nternet。MTA需要确定收件人的具体位置，这一过程通过DNS (Domain Name System)服务来完成，具体来说是一个叫做MX的DNS记录。
 
 如下就是一条MX记录
 <pre><code class="BASH">peets.mpk.ca.us. IN MX 10 realy.hp.com  #example from DNS and BIND edition 4</code></pre>
@@ -95,7 +95,7 @@ sudo postfix reload</code></pre>
 
 ##邮件的发送
 
-这一部分会比之前的部分麻烦一下，我们需要把我们的邮件配置成为一个relay服务器，原因是我希望继续使用Gmail的管理界面，但是邮件的发送人又需要是我自己的邮箱，那么这封邮件就需要由Google先发送到我的邮件服务器，然后在进行转发。　Gmail和我们的转发服务器之间的交流是受加密保护的，因此这里使用到了TLS。　有关TLS是如何运作的，我推荐一下的几篇文章，看过之后会对这套系统有一个认识
+这一部分会比之前的部分麻烦一下，我们需要把我们的邮件配置成为一个relay服务器，原因是我希望继续使用Gmail的管理界面，但是邮件的发送人又需要是我自己的邮箱，那么这封邮件就需要由Google先发送到我的邮件服务器，然后在进行转发。Gmail和我们的转发服务器之间的交流是受加密保护的，因此这里使用到了TLS。有关TLS是如何运作的，我推荐一下的几篇文章，看过之后会对这套系统有一个认识
 
 + <a href="http://security.stackexchange.com/questions/20803/how-does-ssl-tls-work"> How does SSL/TLS Works?</a>
 + <a href="http://en.wikipedia.org/wiki/Transport_Layer_Security">Transport Layer Security</a>
@@ -146,11 +146,11 @@ openssl genrsa -des3 -out example.com.key 2048</code></pre>
 
 3. 生成Self-signed的Certifacte
 <pre><code class="Bash">openssl x509 -req -days 3650 -in example.csr -signkey example.com.key -out example.com.crt</code></pre>
-相关参数解释：
-+ x509 -req: 指明使用的CSR管理系统是<a href="http://en.wikipedia.org/wiki/X.509">X.509</a>
-+ -days: 该认证文件的有效期，以日位单位
-+ -in: 传入刚才创建的CSR文件
-+ -signkey: 传入刚才生成的秘钥
+> 相关参数解释：
+> x509 -req: 指明使用的CSR管理系统是<a href="http://en.wikipedia.org/wiki/X.509">X.509</a>
+> -days: 该认证文件的有效期，以日位单位
+> -in: 传入刚才创建的CSR文件
+> -signkey: 传入刚才生成的秘钥
 
 4. 移除生成的秘钥上的密码
 对于邮件系统这样的守护程序，在机器遇到意外重启后，我们希望在无人值守的情况下恢复工作，所以不可能每次都人为输入密码。
@@ -178,7 +178,7 @@ postconf -e 'smtpd_tls_cert_file = /etc/ssl/certs/example.com.crt'
 postconf -e 'smtpd_tls_CAfile = /etc/ssl/certs/cacert.pem'
 postconf -e 'tls_random_source = dev:/dev/urandom'</code></pre>
 
-配置Postfix使之支持Gmail邮件转发，编辑<span style="background-color: #084B8A"><font color="white">/etc/postfix/master.cf</font></span>,　打开如下内容，注意submission那一行的第三个选项，也就是chroot设置位<span style="background-color: #084B8A"><font color="white"> n</font></span>
+配置Postfix使之支持Gmail邮件转发，编辑<span style="background-color: #084B8A"><font color="white">/etc/postfix/master.cf</font></span>,　打开如下内容，注意submission那一行的第三个选项，也就是chroot设置位<span style="background-color: #084B8A"><font color="white"> n </font></span>
 
 <pre><code class="Bash">submission inet n       -       n       -       -       smtpd
   -o syslog_name=postfix/submission
