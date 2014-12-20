@@ -22,8 +22,9 @@ title: 在DigitalOcean上搭建自己的邮件系统
 上面的图片来自Wikipedia，描述了一封邮件传输过程中要经历的重要节点。MUA (Mail User Agent) 或许是到目前为止最为熟悉的部分。他可以是web-based的，像网页版的Gmail, 也可以是功能完整的桌面客户端，例如Outlook。当一封邮件编辑完成后，它会经由TCP587端口（大多数公司）被发往一个叫做MSA (Mail Submission Agent)的服务器, 由此邮件会被提交到下一站：MTA (Mail Transfer Agent)。 MSA和MTA通常是运行在不同参数配置下的相同的程序，例如我们下面即将配置的Postfix，他们可以是运行在同一台机器上，也可以时运行在不同的机器上。前者主要使用共享文件，后者则需要网络传输。好了，现在你的邮件应该已经到了MTA这一站，接下来即将由此进入I(i)nternet。MTA需要确定收件人的具体位置，这一过程通过DNS (Domain Name System)服务来完成，具体来说是一个叫做MX的DNS记录。
 
 如下就是一条MX记录
-<pre><code class="BASH">peets.mpk.ca.us. IN MX 10 realy.hp.com
-#example from DNS and BIND edition 4</code></pre>
+<pre><code class="BASH">#　example from DNS and BIND edition 4
+peets.mpk.ca.us. IN MX 10 realy.hp.com
+</code></pre>
 
 该条记录有两个功能，它指明了peets.mpk.ca.us.将使用realy.hp.com作为邮件交换器Mail Exchanger(MX) server，同时还为这个邮件交换器指明了优先级，即10。这个优先级的绝对大小并不重要，重要的是它与其他邮件交换器优先级的相对大小，这个关系将作为邮件路由算法的依据。
 
