@@ -147,10 +147,10 @@ openssl genrsa -des3 -out example.com.key 2048</code></pre>
 3. 生成Self-signed的Certifacte
 <pre><code class="Bash">openssl x509 -req -days 3650 -in example.csr -signkey example.com.key -out example.com.crt</code></pre>
 > 相关参数解释：
-> x509 -req: 指明使用的CSR管理系统是<a href="http://en.wikipedia.org/wiki/X.509">X.509</a>
-> -days: 该认证文件的有效期，以日位单位
-> -in: 传入刚才创建的CSR文件
-> -signkey: 传入刚才生成的秘钥
+> + x509 -req: 指明使用的CSR管理系统是<a href="http://en.wikipedia.org/wiki/X.509">X.509</a>
+> + days: 该认证文件的有效期，以日位单位
+> + in: 传入刚才创建的CSR文件
+> + signkey: 传入刚才生成的秘钥
 
 4. 移除生成的秘钥上的密码
 对于邮件系统这样的守护程序，在机器遇到意外重启后，我们希望在无人值守的情况下恢复工作，所以不可能每次都人为输入密码。
@@ -214,6 +214,8 @@ root      1257  0.0  0.1  25344  1700 ?        Ss   Dec14   0:02 /usr/lib/postfi
 <p><img src="{{site.baseurl}}public/img/image/Gmail_verfication2.png"/></p>
 
 如果一切正确，你会收到一封验证邮件。否则的话，查看log文件查看问题。
+
+配置成功后在可以把自己邮箱设置为默认发送邮箱，这样就完成了邮件发送部分的配置。
 
 <a href="http://seasonofcode.com/posts/custom-domain-e-mails-with-postfix-and-gmail-the-missing-tutorial.html">Reference#1</a>,
 <a href="http://www.e-rave.nl/create-a-self-signed-ssl-key-for-postfix">Reference#2</a>
