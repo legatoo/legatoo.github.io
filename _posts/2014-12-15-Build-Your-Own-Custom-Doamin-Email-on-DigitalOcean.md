@@ -27,7 +27,7 @@ title: Build Your Own Custom Domain Email Sever on DigitalOcean
 
 回到邮件的发送，现在通过DNS查询，在MTA邮件查明了将发往何处。然后MTA将会通过SMTP协议将邮件转发到该MX服务器。被MX接受的邮件下一步会被转发到MDA (Mail Delivery Agent)，通过它邮件将会被分发存往对应用户的邮箱里面。现在邮件的接收者就可以通过邮件管理工具去提取自己的邮件了，邮件提取使用到的协议主要有IMAP (Internet Message Access Protocol) 和 POP3 (Post Office Protocol)。
 
-更多内容, 参考wiki <a href="https://en.wikipedia.org/wiki/Simple_Mail_Transfer_Protocol">Wikipedia</a>
+更多内容, 参考<a href="https://en.wikipedia.org/wiki/Simple_Mail_Transfer_Protocol">Wikipedia</a>
 
 下面进入正式的配置。
 <br></br>
@@ -42,18 +42,17 @@ title: Build Your Own Custom Domain Email Sever on DigitalOcean
 
 有人说会有完全免费的解决方案，但是我依然推荐你购买一台自己的VPS，它不仅可以成为你的邮件服务器，同时还可以host你的博客，搭建私人proxy等等。
 
-<br></br>
 
 ##DNS配置
 
-首先配置DNS是因为DNS的传播需要花费一定的时间，在那之前别人是找不到你的邮件地址的。我将在DigitalOcean的网页Console中配置我的DNS，如果要使用这项功能，请确保你正在使用DigitalOcean的nameserver，这个配置需要在域名提供商那里完成。下图是我自己的DNS记录：
+首先配置DNS是因为DNS的传播需要花费一定的时间，在那之前别人是找不到你的邮件地址的。在DigitalOcean的网页Console中配置DNS，如果要使用这项功能，请确保你正在使用DigitalOcean的nameserver，这个配置需要在域名提供商那里完成。下图是我自己的DNS记录：
 
 <p><img src="{{site.baseurl}}public/img/image/DNS_Record.png"/></p>
 
 另外需要注意的是Droplet的名字和你的域名是一致的，这样才能获得一个正确的PTR记录。在DNS传播的同时，继续下面的配置。
 
 ##转发邮件到配置的邮箱
-
+<br></br>
 我们的邮件服务需要使用一款优秀的开源软件来实现，<a href="http://www.postfix.org/start.html">Postfix</a>。
 
 <p><img src="{{site.baseurl}}public/img/image/Postfix_architecture-640px.png"/></p>
@@ -61,30 +60,23 @@ title: Build Your Own Custom Domain Email Sever on DigitalOcean
 在我的机器Ubuntu14.04下使用下面的命令就可以完成安装，使用｀DEBIAN_FRONTEND=noninteractive｀将会跳过交互安装的环节，因为Postfix的配置可以之后通过修改配置文件完成。
 
 <pre><code class="Bash">sudo DEBIAN_FRONTEND=noninteractive　apt-get install postfix</code><pre>
-
 安装完成后，修改配置文件`／etc/postfix/main.cf`
-
 <pre><code class="Bash"># Host and site name.
 myhostname = example.com
 mydomain = example.com
 myorigin = example.com
 
 #Virtual aliases
-virtual_alias_domains = legato.ninja
+virtual_alias_domains = example.com
 virtual_alias_maps = hash:/etc/postfix/virtual</code><pre>
-
 myhostname与之前配置的DNS相匹配即可。Virtual Aliases指明了发往｀virtual_alias_domains｀的邮件将被转发至virtual文件定义的邮箱中去，因此下一步编辑`/etc/postfix/virtual`
-
 <pre><code>#Format:
 #<mail_from_address>  <forward_to_address>
 me@example.com foo@gmail.com
 </code></pre>
-
 使用下面的命令使得Postfix识别virtual文件,
 <pre><code class="Bash">sudo postmap /etc/postfix/virtual</code></pre>
-
 接下来重启Postfix服务,
-
 <pre><code class="Bash">sudo service postfix restart
 sudo postfix reload</code></pre>
 
