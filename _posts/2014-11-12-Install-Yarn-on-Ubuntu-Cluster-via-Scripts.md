@@ -237,3 +237,12 @@ Run a `pi` program in your new installed Yarn Cluster
 <pre><code bash="Bash">hadoop jar $HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-examples-$HADOOP_VERSION.jar pi -Dmapreduce.clientfactory.class.name=org.apache.hadoop.mapred.YarnClientFactory -libjars $HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-client-jobclient-$HADOOP_VERSION.jar 16 10000</code></pre>
 
 `3.14` delivers the greeting from Yarn.
+
+##&#9824;&nbsp;&nbsp;How To Run
+
+This is the easy part. After you are clear about the work mentioned <a href="#section1">section1</a> and <a href="#section2">section2</a>. Simply do this in your terminal.
+
+<pre><code class="Bash">git clone https://github.com/legatoo/hadoop-install-scripts
+cd hadoop-install-scripts
+source install-hadoop2.sh -f | tee log
+</code></pre>
