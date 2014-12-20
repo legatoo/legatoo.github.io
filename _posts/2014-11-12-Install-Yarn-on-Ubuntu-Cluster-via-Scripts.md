@@ -190,7 +190,7 @@ These XML files will be copied to all nodes.
 
 ###8. <a name="format_namenode"><font color="black">Format Namenode</font></a>
 
-The Namenode will be formated during installation. Please noted here assumes you have no HDFS exists, meaning `dn_data_dir=/var/data/hadoop/hdfs/dn` should be empty, <a href="#uninstall"><font color="red">Check how to use uninstall at the end this article</font></a>.
+The Namenode will be formated during installation. Please noted here assumes you have no HDFS exists, meaning `dndatadir=/var/data/hadoop/hdfs/dn` should be empty, <a href="#uninstall"><font color="red">Check how to use uninstall at the end this article</font></a>.
 
 >If there is HDFS filesystem exists, we suppose to have the prompt asking for command (Y/N) about if we want to re-format, but according to my test, pdsh can't redirect input to remote node, so that we don't know when should we input and even if we input (like ues *yes* command to periodically send yes to stdin), the remote node still can't receive it. As a result, the installation progress will hang there. That's where this assumption comes from.
 
