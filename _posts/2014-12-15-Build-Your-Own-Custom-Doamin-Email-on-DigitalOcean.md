@@ -22,7 +22,8 @@ title: Build Your Own Custom Domain Email Sever on DigitalOcean
 上面的图片来自Wikipedia，描述了一封邮件传输过程中要经历的重要节点。MUA (Mail User Agent) 或许是到目前为止最为熟悉的部分。他可以是web-based的，像网页版的Gmail, 也可以是功能完整的桌面客户端，例如Outlook。当一封邮件编辑完成后，它会经由TCP587端口（大多数公司）被发往一个叫做MSA (Mail Submission Agent)的服务器, 由此邮件会被提交到下一站：MTA (Mail Transfer Agent)。 MSA和MTA通常是运行在不同参数配置下的相同的程序，例如我们下面即将配置的Postfix，他们可以是运行在同一台机器上，也可以时运行在不同的机器上。前者主要使用共享文件，后者则需要网络传输。好了，现在你的邮件应该已经到了MTA这一站，接下来即将由此进入I(i)nternet。MTA需要确定收件人的具体位置，这一过程通过DNS (Domain Name System)服务来完成，具体来说是一个叫做MX的DNS记录。
 
 如下就是一条MX记录
-<pre><code class="BASH">peets.mpk.ca.us. IN MX 10 realy.hp.com  #example from DNS and BIND edition 4</code></pre>
+<pre><code class="BASH">peets.mpk.ca.us. IN MX 10 realy.hp.com
+#example from DNS and BIND edition 4</code></pre>
 
 该条记录有两个功能，它指明了peets.mpk.ca.us.将使用realy.hp.com作为邮件交换器Mail Exchanger(MX) server，同时还为这个邮件交换器指明了优先级，即10。这个优先级的绝对大小并不重要，重要的是它与其他邮件交换器优先级的相对大小，这个关系将作为邮件路由算法的依据。
 
@@ -73,10 +74,10 @@ myorigin = example.com
 virtual_alias_domains = example.com
 virtual_alias_maps = hash:/etc/postfix/virtual</code></pre>
 
-myhostname与之前配置的DNS相匹配即可。Virtual Aliases指明了发往virtual_alias_domains的邮件将被转发至virtual文件定义的邮箱中去，因此下一步编辑<span style="background-color: #084B8A"><font color="white">/etc/postfix/virtual</font></span>
+myhostname与之前配置的DNS相匹配即可。Virtual Aliases指明了发往virtual　alias　domains的邮件将被转发至virtual文件定义的邮箱中去，因此下一步编辑<span style="background-color: #084B8A"><font color="white">/etc/postfix/virtual</font></span>
 
-<pre><code>#Format:
-#<mail_from_address>  <forward_to_address>
+<pre><code>#Format: mail@from.address  forward@to.address
+#multiple mailboxs can be declared
 me@example.com foo@gmail.com
 </code></pre>
 
@@ -89,13 +90,13 @@ me@example.com foo@gmail.com
 sudo postfix reload</code></pre>
 
 接下来就可以测试了，发一封邮件去virtual文件里定义的邮箱，然后去对应的Gmail查看。不出意外，那封邮件应该已经在那里了。
-如果没有的话，可以检查/var/log/mail.log和/var/log/mail.err看出现了什么问题，很有可能是DNS还没有更新完成，稍加等候在尝试。我的DNS感觉很快就更新完成了，不知道是不是和在香港有关。
+如果没有的话，可以检查<span style="background-color: #084B8A"><font color="white">/var/log/mail.log</font></span>和<span style="background-color: #084B8A"><font color="white">/var/log/mail.err</font></span>看出现了什么问题，很有可能是DNS还没有更新完成，稍加等候在尝试。我的DNS感觉很快就更新完成了，不知道是不是和在香港有关。
 
 邮件转发完成后，进去邮件发送的部分。
 
 ##邮件的发送
 
-这一部分会比之前的部分麻烦一下，我们需要把我们的邮件配置成为一个relay服务器，原因是我希望继续使用Gmail的管理界面，但是邮件的发送人又需要是我自己的邮箱，那么这封邮件就需要由Google先发送到我的邮件服务器，然后在进行转发。Gmail和我们的转发服务器之间的交流是受加密保护的，因此这里使用到了TLS。有关TLS是如何运作的，我推荐一下的几篇文章，看过之后会对这套系统有一个认识
+这一部分会比之前的部分麻烦一点，我们需要把我们的服务器配置成为一个relay服务器，原因是我希望继续使用Gmail的管理界面，但是邮件的发送人又需要是我自己的邮箱，那么这封邮件就需要由Google先发送到我的邮件服务器，然后在进行转发。Gmail和我们的转发服务器之间的交流是受加密保护的，因此这里使用到了TLS。有关TLS是如何运作的，我推荐一下的几篇文章，看过之后会对这套系统有一个认识
 
 + <a href="http://security.stackexchange.com/questions/20803/how-does-ssl-tls-work"> How does SSL/TLS Works?</a>
 + <a href="http://en.wikipedia.org/wiki/Transport_Layer_Security">Transport Layer Security</a>
@@ -136,13 +137,13 @@ log_level: 7</code></pre>
 
 ###生成认证所需的公钥密钥
 
-1. 生成所需的秘钥（记住所输入的秘钥）
+1. 生成所需的秘钥（记住所输入的密码）
 <pre><code class="Bash">cd
 openssl genrsa -des3 -out example.com.key 2048</code></pre>
 
-2. 生成SSH Key(private key)和Certificate Signing Request(csr)文件
+2. 生成SSH Key (private key)和Certificate Signing Request (csr)文件
 <pre><code class="Bash">openssl req -new -key example.com.key -out example.com.csr</code></pre>
-除了不要忘记这里输入的密码外，注意两点: [1]在Common Name那里输入你的域名地址（与<span style="background-color: #084B8A"><font color="white">/etc/postfix/main.cf</font></span>中的myhostname同） [2]不用输入Challenge Password
+除了不要忘记这里输入的密码外，注意两点: [1]在<font color="red">Common Name</font>那里输入你的域名地址（与<span style="background-color: #084B8A"><font color="white">/etc/postfix/main.cf</font></span>中的myhostname同） [2]不用输入Challenge Password
 
 3. 生成Self-signed的Certifacte
 <pre><code class="Bash">openssl x509 -req -days 3650 -in example.csr -signkey example.com.key -out example.com.crt</code></pre>
