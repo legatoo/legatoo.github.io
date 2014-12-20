@@ -53,14 +53,14 @@ title: Build Your Own Custom Domain Email Sever on DigitalOcean
 另外需要注意的是Droplet的名字和你的域名是一致的，这样才能获得一个正确的PTR记录。在DNS传播的同时，继续下面的配置。
 
 ##转发邮件到配置的邮箱
-<br></br>
+
 我们的邮件服务需要使用一款优秀的开源软件来实现，<a href="http://www.postfix.org/start.html">Postfix</a>。
 
 <p><img src="{{site.baseurl}}public/img/image/Postfix_architecture-640px.png"/></p>
 
 在我的机器Ubuntu14.04下使用下面的命令就可以完成安装，使用`DEBIAN_FRONTEND=noninteractive`将会跳过交互安装的环节，因为Postfix的配置可以之后通过修改配置文件完成。
 
-<pre><code class="Bash">sudo DEBIAN_FRONTEND=noninteractive　apt-get install postfix</code><pre>
+<pre><code class="Bash">sudo DEBIAN_FRONTEND=noninteractive　apt-get install postfix</code></pre>
 
 安装完成后，修改配置文件`／etc/postfix/main.cf`
 
@@ -71,7 +71,7 @@ myorigin = example.com
 
 #Virtual aliases
 virtual_alias_domains = legato.ninja
-virtual_alias_maps = hash:/etc/postfix/virtual</code><pre>
+virtual_alias_maps = hash:/etc/postfix/virtual</code></pre>
 
 myhostname与之前配置的DNS相匹配即可。Virtual Aliases指明了发往`virtual_alias_domains`的邮件将被转发至virtual文件定义的邮箱中去，因此下一步编辑`/etc/postfix/virtual`
 
@@ -112,7 +112,7 @@ sudo postfix reload</code></pre>
 
 上面的命令会建立一个名为`smtp`的用户，用户名可以随意选择。完成后，在`/etc`下会出现一个保存用户名和密码的文件`sasldb2`
 
-<pre><code>~$ ls -l /etc/sasldb2
+<pre><code class="Bash">~$ ls -l /etc/sasldb2
 -r-------- 1 postfix root 12288 Dec 12 05:01 /etc/sasldb2
 </code></pre>
 
