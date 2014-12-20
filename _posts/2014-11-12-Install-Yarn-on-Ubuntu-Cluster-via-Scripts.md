@@ -258,4 +258,4 @@ Thank you for reading.
 
 @stevenyfy
 
-<meta itemprop="url" content="http://legato.ninja/2014/11/12/Install-Yarn-on-Ubuntu-Cluster-via-Scripts/"></div>
+<meta itemprop="url" content="http://legato.ninja/2014/11/12/Install-Yarn-on-Ubuntu-Cluster-via-Scripts/">
