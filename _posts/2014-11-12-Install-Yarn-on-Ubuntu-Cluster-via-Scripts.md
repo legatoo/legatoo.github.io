@@ -154,3 +154,27 @@ You can define cluster topo in files. Yarn Install Script will read them in, and
 *  *dn_hosts*:  HDFS DataNode hostnames
 
 > <font color="Red">Note: </font>all hostanmes in these files are separated by ONE space
+
+###5. Distribute Bash Startup Files
+In order to let Yarn running when your cluster starts up. Some environent variable should be `export`. There are multiple places can do this: <span style="background-color: #23241f"><font color="white">~/.bash_profile</font></span>, <span style="background-color: #23241f"><font color="white">~/.bashrc</font></span>, <span style="background-color: #23241f"><font color="white">/etc/profile</font></span>, and scripts in <span style="background-color: #23241f"><font color="white">/etc/profile.d</font></span>. First two are user-specific, and last two are global. But there are differences between last two places, the scripts in `/etc/profile.d/` are application-specific startup scripts, and it helps you organize system in modules which is much easy in terms of maintenance, see [more](http://unix.stackexchange.com/questions/64258/what-do-the-scripts-in-etc-profile-d-do).  So, we put the script in `/etc/profile.d`
+
+<pre><code class="Bash">pdsh -w ^all_hosts  echo "export JAVA_HOME=$JAVA_HOME > /etc/profile.d/java.sh"
+pdsh -w ^all_hosts  echo "export HADOOP_HOME=$HADOOP_HOME > /etc/profile.d/hadoop.sh"
+pdsh -w ^all_hosts  echo "export HADOOP_PREFIX=$HADOOP_HOME >> /etc/profile.d/hadoop.sh"
+pdsh -w ^all_hosts  echo "export HADOOP_CONF_DIR=$HADOOP_CONF_DIR >> /etc/profile.d/hadoop.sh"</code></pre>
+
+###6. Create Directories Across Cluster for Yarn
+You can see these directories in the beginning of script:
+
+<pre><code class="Bash">NN_DATA_DIR=/var/data/hadoop/hdfs/nn
+SNN_DATA_DIR=/var/data/hadoop/hdfs/snn
+DN_DATA_DIR=/var/data/hadoop/hdfs/dn
+YARN_LOG_DIR=/var/log/hadoop/yarn
+HADOOP_LOG_DIR=/var/log/hadoop/hdfs
+HADOOP_MAPRED_LOG_DIR=/var/log/hadoop/mapred
+YARN_PID_DIR=/var/run/hadoop/yarn
+HADOOP_PID_DIR=/var/run/hadoop/hdfs
+HADOOP_MAPRED_PID_DIR=/var/run/hadoop/mapred</code></pre>
+
+
+And scripts will `mkdir` for every line above. Because we'v set `sudo-passwd-less` before, the operations now are executed without password.
