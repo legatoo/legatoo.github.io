@@ -246,3 +246,14 @@ This is the easy part. After you are clear about the work mentioned <a href="#se
 cd hadoop-install-scripts
 source install-hadoop2.sh -f | tee log
 </code></pre>
+
+For <a name="uninstall"><font color="black">Uninstall</font></a><sup><a href="#format_namenode">&nbsp;back</a></sup>
+
+<pre><code class="Bash">source uninstall-hadoop2.sh</code></pre>
+
+<font color="Red">*Note*</font>: `uninstall-hadoop2.sh` will delete current files in your HDFS, <font color="red">be careful</font>. Also, sometimes `jps` will not show running hadoop service which makes new installation failure misleading, so, the uninstall script will also kill your `java` progress to give new install a fresh environment, <font color="red">be careful</font> and modify as your demands.
+
+
+Thank you for reading.
+
+@stevenyfy
