@@ -215,5 +215,8 @@ root      1257  0.0  0.1  25344  1700 ?        Ss   Dec14   0:02 /usr/lib/postfi
 
 如果一切正确，你会收到一封验证邮件。否则的话，查看log文件查看问题。
 
+<a href="http://seasonofcode.com/posts/custom-domain-e-mails-with-postfix-and-gmail-the-missing-tutorial.html">Reference#1</a>
+<a href="http://www.e-rave.nl/create-a-self-signed-ssl-key-for-postfix">Reference#2</a>
+
 Cheers,
 @stevenyfy
