@@ -5,6 +5,7 @@ title: Build Your Own Custom Domain Email Sever on DigitalOcean
 一封从自己的域名发出的邮件，对于开发者来说，是一份最好的自我介绍。在两位博主的文章以及维基的帮助下，上周在DigitalOcean搭建了自己的邮件系统，中间学到不少东西，特此记录下来。
 
 这篇文章中将会包含以下内容：
+
 + 发向`me@yourdomain.com`邮件将会转发到配置的Gmail邮箱
 + 使用Gmail作为邮件的图形化管理界面，Google Inbox也适用
 + 发出的邮件将会来自于`me@yourdomain.com`
@@ -23,7 +24,7 @@ title: Build Your Own Custom Domain Email Sever on DigitalOcean
 如下就是一条MX记录
 <pre><code class="BASH">peets.mpk.ca.us. IN MX 10 realy.hp.com  #example from DNS and BIND edition 4</code></pre>
 
-该条记录有两个功能，它指明了｀peets.mpk.ca.us.｀将使用｀realy.hp.com｀作为邮件交换器Mail Exchanger(MX) server，同时还为这个邮件交换器指明了优先级，即10。这个优先级的绝对大小并不重要，重要的是它与其他邮件交换器优先级的相对大小，这个关系将作为邮件路由算法的依据。
+该条记录有两个功能，它指明了`peets.mpk.ca.us.`将使用`realy.hp.com`作为邮件交换器Mail Exchanger(MX) server，同时还为这个邮件交换器指明了优先级，即10。这个优先级的绝对大小并不重要，重要的是它与其他邮件交换器优先级的相对大小，这个关系将作为邮件路由算法的依据。
 
 回到邮件的发送，现在通过DNS查询，在MTA邮件查明了将发往何处。然后MTA将会通过SMTP协议将邮件转发到该MX服务器。被MX接受的邮件下一步会被转发到MDA (Mail Delivery Agent)，通过它邮件将会被分发存往对应用户的邮箱里面。现在邮件的接收者就可以通过邮件管理工具去提取自己的邮件了，邮件提取使用到的协议主要有IMAP (Internet Message Access Protocol) 和 POP3 (Post Office Protocol)。
 
@@ -45,14 +46,14 @@ title: Build Your Own Custom Domain Email Sever on DigitalOcean
 
 ##DNS配置
 
-首先配置DNS是因为DNS的传播需要花费一定的时间，在那之前别人是找不到你的邮件地址的。在DigitalOcean的网页Console中配置DNS，如果要使用这项功能，请确保你正在使用DigitalOcean的nameserver，这个配置需要在域名提供商那里完成。下图是我自己的DNS记录：
+首先配置DNS是因为DNS的传播需要花费一定的时间，在那之前别人是找不到你的邮件地址的。我将在DigitalOcean的网页Console中配置我的DNS，如果要使用这项功能，请确保你正在使用DigitalOcean的nameserver，这个配置需要在域名提供商那里完成。下图是我自己的DNS记录：
 
 <p><img src="{{site.baseurl}}public/img/image/DNS_Record.png"/></p>
 
 另外需要注意的是Droplet的名字和你的域名是一致的，这样才能获得一个正确的PTR记录。在DNS传播的同时，继续下面的配置。
 
 ##转发邮件到配置的邮箱
-
+<br></br>
 我们的邮件服务需要使用一款优秀的开源软件来实现，<a href="http://www.postfix.org/start.html">Postfix</a>。
 
 <p><img src="{{site.baseurl}}public/img/image/Postfix_architecture-640px.png"/></p>
@@ -60,23 +61,30 @@ title: Build Your Own Custom Domain Email Sever on DigitalOcean
 在我的机器Ubuntu14.04下使用下面的命令就可以完成安装，使用`DEBIAN_FRONTEND=noninteractive`将会跳过交互安装的环节，因为Postfix的配置可以之后通过修改配置文件完成。
 
 <pre><code class="Bash">sudo DEBIAN_FRONTEND=noninteractive　apt-get install postfix</code><pre>
+
 安装完成后，修改配置文件`／etc/postfix/main.cf`
+
 <pre><code class="Bash"># Host and site name.
 myhostname = example.com
 mydomain = example.com
 myorigin = example.com
 
 #Virtual aliases
-virtual_alias_domains = example.com
+virtual_alias_domains = legato.ninja
 virtual_alias_maps = hash:/etc/postfix/virtual</code><pre>
+
 myhostname与之前配置的DNS相匹配即可。Virtual Aliases指明了发往`virtual_alias_domains`的邮件将被转发至virtual文件定义的邮箱中去，因此下一步编辑`/etc/postfix/virtual`
+
 <pre><code>#Format:
 #<mail_from_address>  <forward_to_address>
 me@example.com foo@gmail.com
 </code></pre>
+
 使用下面的命令使得Postfix识别virtual文件,
 <pre><code class="Bash">sudo postmap /etc/postfix/virtual</code></pre>
+
 接下来重启Postfix服务,
+
 <pre><code class="Bash">sudo service postfix restart
 sudo postfix reload</code></pre>
 
@@ -87,9 +95,8 @@ sudo postfix reload</code></pre>
 
 ##邮件的发送
 
-这一部分会比之前的部分麻烦一下，我们需要把我们的邮件配置成为一个relay服务器，原因是我希望继续使用Gmail的管理界面，但是邮件的发送人又需要是我自己的邮箱，那么这封邮件就需要由Google先发送到我的邮件服务器，然后在进行转发。　Gmail和我们的转发服务器之间的交流是受加密保护的，因此这里使用到了TLS。　有关TLS是如何运作的，我推荐一下的几篇文章，看过之后会对这套系统有一个认识:
-
-+ <a href="http://security.stackexchange.com/questions/20803/how-does-ssl-tls-work">How does SSL/TLS Works?</a>
+这一部分会比之前的部分麻烦一下，我们需要把我们的邮件配置成为一个relay服务器，原因是我希望继续使用Gmail的管理界面，但是邮件的发送人又需要是我自己的邮箱，那么这封邮件就需要由Google先发送到我的邮件服务器，然后在进行转发。　Gmail和我们的转发服务器之间的交流是受加密保护的，因此这里使用到了TLS。　有关TLS是如何运作的，我推荐一下的几篇文章，看过之后会对这套系统有一个认识
++ <a href="http://security.stackexchange.com/questions/20803/how-does-ssl-tls-work"> How does SSL/TLS Works?</a>
 + <a href="http://en.wikipedia.org/wiki/Transport_Layer_Security">Transport Layer Security</a>
 + <a href="http://en.wikipedia.org/wiki/Public-key_cryptography">Public-key cryptography</a>
 
@@ -118,7 +125,7 @@ sudo postfix reload</code></pre>
 <pre><code class="Bash">sudo chmod 400 /etc/sasldb2
 sudo chown postfix /etc/sasldb2</code></pre>
 
-修改配置文件｀/etc/postfix/sasl/smtpd.conf｀
+修改配置文件`/etc/postfix/sasl/smtpd.conf`
 
 <pre><code class="Bash"># /etc/postfix/sasl/smtpd.conf
 sasl_pwcheck_method: auxprop
@@ -135,7 +142,7 @@ openssl genrsa -des3 -out example.com.key 2048</code></pre>
 2. 生成SSH Key(private key)和Certificate Signing Request(csr)文件
 <pre><code class="Bash">openssl req -new -key example.com.key -out example.com.csr</code></pre>
 
-除了不要忘记这里输入的密码外，注意两点，1. 在Common Name那里输入你的域名地址（与`/etc/postfix/main.cf`中的｀myhostname｀同）; 2. 不用输入Challenge Password
+除了不要忘记这里输入的密码外，注意两点，1. 在Common Name那里输入你的域名地址（与`/etc/postfix/main.cf`中的`myhostname`同）; 2. 不用输入Challenge Password
 
 3. 生成Self-signed的Certifacte
 </pre></code>openssl x509 -req -days 3650 -in example.csr -signkey example.com.key -out example.com.crt</code></pre>
@@ -200,7 +207,7 @@ root      1257  0.0  0.1  25344  1700 ?        Ss   Dec14   0:02 /usr/lib/postfi
 
 ###Gmail端的配置
 
-在Gmail的`Setting`中找到｀Accounts and Import｀，其中有一项｀Add another email address you own｀，点开后进行认证
+在Gmail的`Setting`中找到`Accounts and Import`，其中有一项`Add another email address you own`，点开后进行认证
 
 <p><img src="{{site.baseurl}}public/img/image/Gmail_verfication1.png"/></p>
 
