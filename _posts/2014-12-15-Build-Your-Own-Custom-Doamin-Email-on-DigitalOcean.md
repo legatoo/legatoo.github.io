@@ -6,9 +6,9 @@ title: Build Your Own Custom Domain Email Sever on DigitalOcean
 
 这篇文章中将会包含以下内容：
 
-+ 发向`me@yourdomain.com`邮件将会转发到配置的Gmail邮箱
++ 发向me@yourdomain.com邮件将会转发到配置的Gmail邮箱
 + 使用Gmail作为邮件的图形化管理界面，Google Inbox也适用
-+ 发出的邮件将会来自于`me@yourdomain.com`
++ 发出的邮件将会来自于me@yourdomain.com
 + （Optional）避免自己被识别为Spammer
 
 那就开始吧。
@@ -24,7 +24,7 @@ title: Build Your Own Custom Domain Email Sever on DigitalOcean
 如下就是一条MX记录
 <pre><code class="BASH">peets.mpk.ca.us. IN MX 10 realy.hp.com  #example from DNS and BIND edition 4</code></pre>
 
-该条记录有两个功能，它指明了`peets.mpk.ca.us.`将使用`realy.hp.com`作为邮件交换器Mail Exchanger(MX) server，同时还为这个邮件交换器指明了优先级，即10。这个优先级的绝对大小并不重要，重要的是它与其他邮件交换器优先级的相对大小，这个关系将作为邮件路由算法的依据。
+该条记录有两个功能，它指明了peets.mpk.ca.us.将使用realy.hp.com作为邮件交换器Mail Exchanger(MX) server，同时还为这个邮件交换器指明了优先级，即10。这个优先级的绝对大小并不重要，重要的是它与其他邮件交换器优先级的相对大小，这个关系将作为邮件路由算法的依据。
 
 回到邮件的发送，现在通过DNS查询，在MTA邮件查明了将发往何处。然后MTA将会通过SMTP协议将邮件转发到该MX服务器。被MX接受的邮件下一步会被转发到MDA (Mail Delivery Agent)，通过它邮件将会被分发存往对应用户的邮箱里面。现在邮件的接收者就可以通过邮件管理工具去提取自己的邮件了，邮件提取使用到的协议主要有IMAP (Internet Message Access Protocol) 和 POP3 (Post Office Protocol)。
 
@@ -58,11 +58,11 @@ title: Build Your Own Custom Domain Email Sever on DigitalOcean
 
 <p><img src="{{site.baseurl}}public/img/image/Postfix_architecture-640px.png"/></p>
 
-在我的机器Ubuntu14.04下使用下面的命令就可以完成安装，使用<span style="background-color: #848484"><font color="white">`DEBIAN_FRONTEND=noninteractive`</font></span>将会跳过交互安装的环节，因为Postfix的配置可以之后通过修改配置文件完成。
+在我的机器Ubuntu14.04下使用下面的命令就可以完成安装，使用<span style="background-color: #084B8A><font color="white">DEBIAN_FRONTEND=noninteractive</font></span>将会跳过交互安装的环节，因为Postfix的配置可以之后通过修改配置文件完成。
 
 <pre><code class="Bash">sudo DEBIAN_FRONTEND=noninteractive　apt-get install postfix</code></pre>
 
-安装完成后，修改配置文件<span style="background-color: #848484"><font color="white">`／etc/postfix/main.cf`</font></span>
+安装完成后，修改配置文件<span style="background-color: #084B8A><font color="white">／etc/postfix/main.cf</font></span>
 
 <pre><code class="Bash"># Host and site name.
 myhostname = example.com
@@ -73,7 +73,7 @@ myorigin = example.com
 virtual_alias_domains = legato.ninja
 virtual_alias_maps = hash:/etc/postfix/virtual</code></pre>
 
-myhostname与之前配置的DNS相匹配即可。Virtual Aliases指明了发往`virtual_alias_domains`的邮件将被转发至virtual文件定义的邮箱中去，因此下一步编辑<span style="background-color: #848484"><font color="white">`/etc/postfix/virtual`</font></span>
+myhostname与之前配置的DNS相匹配即可。Virtual Aliases指明了发往virtual_alias_domains的邮件将被转发至virtual文件定义的邮箱中去，因此下一步编辑<span style="background-color: #084B8A><font color="white">/etc/postfix/virtual</font></span>
 
 <pre><code>#Format:
 #<mail_from_address>  <forward_to_address>
@@ -89,7 +89,7 @@ me@example.com foo@gmail.com
 sudo postfix reload</code></pre>
 
 接下来就可以测试了，发一封邮件去virtual文件里定义的邮箱，然后去对应的Gmail查看。不出意外，那封邮件应该已经在那里了。
-如果没有的话，可以检查`/var/log/mail.log`和`/var/log/mail.err`看出现了什么问题，很有可能是DNS还没有更新完成，稍加等候在尝试。我的DNS感觉很快就更新完成了，不知道是不是和在香港有关。
+如果没有的话，可以检查/var/log/mail.log和/var/log/mail.err看出现了什么问题，很有可能是DNS还没有更新完成，稍加等候在尝试。我的DNS感觉很快就更新完成了，不知道是不是和在香港有关。
 
 邮件转发完成后，进去邮件发送的部分。
 
@@ -111,7 +111,7 @@ sudo postfix reload</code></pre>
 
 <pre><code class="Bash">sudo saslpasswd2 -c -u example.com smtp</code></pre>
 
-上面的命令会建立一个名为`smtp`的用户，用户名可以随意选择。完成后，在<span style="background-color: #848484"><font color="white">`/etc`</font></span>下会出现一个保存用户名和密码的文件`sasldb2`
+上面的命令会建立一个名为smtp的用户，用户名可以随意选择。完成后，在<span style="background-color: #084B8A><font color="white">/etc</font></span>下会出现一个保存用户名和密码的文件sasldb2
 
 <pre><code class="Bash">~$ ls -l /etc/sasldb2
 -r-------- 1 postfix root 12288 Dec 12 05:01 /etc/sasldb2
@@ -126,7 +126,7 @@ sudo postfix reload</code></pre>
 <pre><code class="Bash">sudo chmod 400 /etc/sasldb2
 sudo chown postfix /etc/sasldb2</code></pre>
 
-修改配置文件<span style="background-color: #848484"><font color="white">`/etc/postfix/sasl/smtpd.conf`</font></span>
+修改配置文件<span style="background-color: #084B8A><font color="white">/etc/postfix/sasl/smtpd.conf</font></span>
 
 <pre><code class="Bash"># /etc/postfix/sasl/smtpd.conf
 sasl_pwcheck_method: auxprop
@@ -142,7 +142,7 @@ openssl genrsa -des3 -out example.com.key 2048</code></pre>
 
 2. 生成SSH Key(private key)和Certificate Signing Request(csr)文件
 <pre><code class="Bash">openssl req -new -key example.com.key -out example.com.csr</code></pre>
-除了不要忘记这里输入的密码外，注意两点: [1]在Common Name那里输入你的域名地址（与<span style="background-color: #848484"><font color="white">/etc/postfix/main.cf</font></span>中的`myhostname`同） [2]不用输入Challenge Password
+除了不要忘记这里输入的密码外，注意两点: [1]在Common Name那里输入你的域名地址（与<span style="background-color: #084B8A><font color="white">/etc/postfix/main.cf</font></span>中的myhostname同） [2]不用输入Challenge Password
 
 3. 生成Self-signed的Certifacte
 </pre><code class="Bash">openssl x509 -req -days 3650 -in example.csr -signkey example.com.key -out example.com.crt</code></pre>
@@ -178,7 +178,7 @@ postconf -e 'smtpd_tls_cert_file = /etc/ssl/certs/example.com.crt'
 postconf -e 'smtpd_tls_CAfile = /etc/ssl/certs/cacert.pem'
 postconf -e 'tls_random_source = dev:/dev/urandom'</code></pre>
 
-配置Postfix使之支持Gmail邮件转发，编辑<span style="background-color: #848484"><font color="white">`/etc/postfix/master.cf`</font></span>,　打开如下内容，注意submission那一行的第三个选项，也就是chroot设置位<span style="background-color: #848484"><font color="white">`n`</font></span>
+配置Postfix使之支持Gmail邮件转发，编辑<span style="background-color: #084B8A><font color="white">/etc/postfix/master.cf</font></span>,　打开如下内容，注意submission那一行的第三个选项，也就是chroot设置位<span style="background-color: #084B8A><font color="white">n</font></span>
 
 <pre><code class="Bash">submission inet n       -       n       -       -       smtpd
   -o syslog_name=postfix/submission
@@ -207,7 +207,7 @@ root      1257  0.0  0.1  25344  1700 ?        Ss   Dec14   0:02 /usr/lib/postfi
 
 ###Gmail端的配置
 
-在Gmail的`Setting`中找到`Accounts and Import`，其中有一项`Add another email address you own`，点开后进行认证
+在Gmail的Setting中找到Accounts and Import，其中有一项Add another email address you own，点开后进行认证
 
 <p><img src="{{site.baseurl}}public/img/image/Gmail_verfication1.png"/></p>
 
