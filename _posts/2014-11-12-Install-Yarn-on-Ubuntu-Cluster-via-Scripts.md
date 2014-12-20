@@ -190,4 +190,73 @@ These XML files will be copied to all nodes.
 
 ###8. <a name="format_namenode"><font color="black">Format Namenode</font></a>
 
-The Namenode will be formated during installation. Please noted here assumes you have no HDFS exists, meaning `DN_DATA_DIR=/var/data/hadoop/hdfs/dn` should be empty, Otherwise, execute `uninstall_hadoop.sh` first.
+>If there is HDFS filesystem exists, we suppose to have the prompt asking for command (Y/N) about if we want to re-format, but according to my test, pdsh can't redirect input to remote node, so that we don't know when should we input and even if we input (like ues *yes* command to periodically send yes to stdin), the remote node still can't receive it. As a result, the installation progress will hang there. That's where this assumption comes from.
+
+One issue here is sometimes the JAVA_HOME can not be resolved correctly in `hadoop-env.sh`, so, we have to explicitly set it.
+
+<pre><code class="Bash">#in order to fix "JAVA_HOME not found issue"
+sed -i "s|\${JAVA_HOME}|$JAVA_HOME|g" $HADOOP_HOME/etc/hadoop/hadoop-env.sh
+
+pdcp -w ^all_hosts $HADOOP_HOME/etc/hadoop/hadoop-env.sh $HADOOP_HOME/etc/hadoop/
+pdsh -w ^nn_host "$HADOOP_HOME/bin/hdfs namenode -format"</code></pre>
+
+
+###9. Copy Startup Scripts to Nodes
+
+You don't want to start up Hadoop every time you start your machines, do you? The install scripts will allow hadoop to start with the OS booting up by put scripts in `/etc/init.d/`. So that hadoop services will be started as daemons in your systems.
+
+Note that, these scripts are modified to work under Ubuntu. Three lines below are added.
+
+<pre><code>source /etc/profile.d/hadoop.sh
+source /etc/profile.d/java.sh
+
+source /lib/lsb/init-functions
+#init-functions has the function to start daemon</code></pre>
+
+the code below is commented out, since it works under CentOS
+<pre><code class="Bash">source /etc/rc.d/init.d/functions
+</code></pre>
+
+in every startup script, changes are also made for Ubuntu.
+
+
+###10. Start up Hadoop Services
+
+Hadoop services will be treated as daemons, and services are going to be started just like you start a normal service. By doing this. We need to register each service in OS, which brings the reason why we need to instasll `sysv-rc-conf` in the beginning. For more details about `sysv-rc-conf`, see [this](http://manpages.ubuntu.com/manpages/dapper/man8/sysv-rc-conf.8.html).
+
+<pre><code class="Bash">echo "Starting Hadoop $HADOOP_VERSION services on all hosts..."
+pdsh -w ^nn_host "chmod 755 /etc/init.d/hadoop-namenode && sudo sysv-rc-conf hadoop-namenode on && sudo service hadoop-namenode start"
+pdsh -w ^snn_host "chmod 755 /etc/init.d/hadoop-secondarynamenode && sudo sysv-rc-conf hadoop-secondarynamenode on && sudo service hadoop-secondarynamenode start"
+pdsh -w ^dn_hosts "chmod 755 /etc/init.d/hadoop-datanode && sudo sysv-rc-conf hadoop-datanode on && sudo service hadoop-datanode pdsh -w ^rm_host "chmod 755 /etc/init.d/hadoop-resourcemanager && sudo sysv-rc-conf hadoop-resourcemanager on && sudo service hadoop-resourcemanager start"
+pdsh -w ^nm_hosts "chmod 755 /etc/init.d/hadoop-nodemanager && sudo sysv-rc-conf hadoop-nodemanager on && sudo service hadoop-nodemanager start"</code></pre>
+
+###11. Time for Smoke Test
+
+Run a `pi` program in your new installed Yarn Cluster
+
+<pre><code bash="Bash">hadoop jar $HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-examples-$HADOOP_VERSION.jar pi -Dmapreduce.clientfactory.class.name=org.apache.hadoop.mapred.YarnClientFactory -libjars $HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-client-jobclient-$HADOOP_VERSION.jar 16 10000</code></pre>
+
+`3.14` delivers the greeting from Yarn.
+
+
+##&#9824;&nbsp;&nbsp;How To Run
+
+This is the easy part. After you are clear about the work mentioned <a href="#section1">section1</a> and <a href="#section2">section2</a>. Simply do this in your terminal.
+
+<pre><code class="Bash">git clone https://github.com/legatoo/hadoop-install-scripts
+cd hadoop-install-scripts
+source install-hadoop2.sh -f | tee log
+</code></pre>
+
+For <a name="uninstall"><font color="black">Uninstall</font></a><sup><a href="#format_namenode">&nbsp;back</a></sup>
+
+<pre><code class="Bash">source uninstall-hadoop2.sh</code></pre>
+
+<font color="Red">*Note*</font>: `uninstall-hadoop2.sh` will delete current files in your HDFS, <font color="red">be careful</font>. Also, sometimes `jps` will not show running hadoop service which makes new installation failure misleading, so, the uninstall script will also kill your `java` progress to give new install a fresh environment, <font color="red">be careful</font> and modify as your demands.
+
+
+Thank you for reading.
+
+@stevenyfy
+
+<meta itemprop="url" content="http://legato.ninja/2014/11/12/Install-Yarn-on-Ubuntu-Cluster-via-Scripts/"></div>
