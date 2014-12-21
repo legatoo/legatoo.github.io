@@ -13,7 +13,7 @@ title: 在DigitalOcean上搭建自己的邮件系统
 
 那就开始吧。
 
-##发送和接收邮件时都发生了什么？
+##&#9824;&nbsp;&nbsp;发送和接收邮件时都发生了什么？
 
 邮件是我自己最喜欢使用的通讯方式，它给我了足够的时间去组织一个良好的回复，并且具有更好的检索功能，可以在需要的时候找到历史的备份，简直就是一个冥想盆。在正式搭建自己的邮件服务之前，对邮件的传输有一个大致的认识会帮助理解后面的许多配置环境。　
 
@@ -35,7 +35,7 @@ peets.mpk.ca.us. IN MX 10 realy.hp.com
 下面进入正式的配置。
 <br></br>
 
-##准备工作
+##&#9824;&nbsp;&nbsp;准备工作
 
 为了搭建自己的邮件系统，后面的内容默认你已经具备了以下的条件
 
@@ -46,7 +46,7 @@ peets.mpk.ca.us. IN MX 10 realy.hp.com
 有人说会有完全免费的解决方案，但是我依然推荐你购买一台自己的VPS，它不仅可以成为你的邮件服务器，同时还可以host你的博客，搭建私人proxy等等。
 
 
-##DNS配置
+##&#9824;&nbsp;&nbsp;DNS配置
 
 首先配置DNS是因为DNS的传播需要花费一定的时间，在那之前别人是找不到你的邮件地址的。我将在DigitalOcean的网页Console中配置我的DNS，如果要使用这项功能，请确保你正在使用DigitalOcean的nameserver，这个配置需要在域名提供商那里完成。下图是我自己的DNS记录：
 
@@ -54,7 +54,7 @@ peets.mpk.ca.us. IN MX 10 realy.hp.com
 
 另外需要注意的是Droplet的名字和你的域名是一致的，这样才能获得一个正确的PTR记录。在DNS传播的同时，继续下面的配置。
 
-##转发邮件到配置的邮箱
+##&#9824;&nbsp;&nbsp;转发邮件到配置的邮箱
 
 我们的邮件服务需要使用一款优秀的开源软件来实现，<a href="http://www.postfix.org/start.html">Postfix</a>。
 
@@ -95,7 +95,7 @@ sudo postfix reload</code></pre>
 
 邮件转发完成后，进去邮件发送的部分。
 
-##邮件的发送
+##&#9824;&nbsp;&nbsp;邮件的发送
 
 这一部分会比之前的部分麻烦一点，我们需要把我们的服务器配置成为一个relay服务器，原因是我希望继续使用Gmail的管理界面，但是邮件的发送人又需要是我自己的邮箱，那么这封邮件就需要由Google先发送到我的邮件服务器，然后在进行转发。Gmail和我们的转发服务器之间的交流是受加密保护的，因此这里使用到了TLS。有关TLS是如何运作的，我推荐一下的几篇文章，看过之后会对这套系统有一个认识
 
@@ -216,7 +216,7 @@ root      1257  0.0  0.1  25344  1700 ?        Ss   Dec14   0:02 /usr/lib/postfi
 配置成功后在可以把自己邮箱设置为默认发送邮箱，这样就完成了邮件发送部分的配置。
 
 
-##防止被识别为垃圾邮件
+##&#9824;&nbsp;&nbsp;防止被识别为垃圾邮件
 
 完成这一部分的配置后，你会发现经由你发出的邮件头中出现了新的内容，如下：
 <p><img src="{{site.baseurl}}public/img/image/DKIM_SRS.png"/></p>
@@ -226,7 +226,7 @@ root      1257  0.0  0.1  25344  1700 ?        Ss   Dec14   0:02 /usr/lib/postfi
 
 还记得我们将服务器配置成了一台帮助Gmail进行转发的MTA吗？是的，整个互联网中充满了这样的转发服务器，他们代表着发送者进行邮件的转发，我们已经配置了SASL验证来避免我们的relay服务器被其他人使用，这是好的。但是我们的邮箱依然有可能被别人伪造来进行钓鱼攻击(<a href="https://support.google.com/mail/answer/8253?hl=en">phishing</a>)，因此我们需要采取必要的措施允许收件人验证邮件的确由我发出，这里使用到了<a href="http://en.wikipedia.org/wiki/DomainKeys_Identified_Mail">DKIM</a>
 
-如果你还记得在配置公钥密钥时候的那几篇文章，理解DKIM就会方便很多。我们使用我们的秘钥加密邮件(header以及contents)，然后将加密后的值保存在一个DKIM-Signature结构中附加在Mail Header中，DKIM是独立于SMTP的，邮件最后会通过管理DKIM的软件所监听的端口进行签名，亦即插入DKIM-Signature记录，如果我们在Gmail中查看邮件的具体信息（下来菜单中使用show original），我们可以清楚的看到这条记录(下图倒数第二条)：
+如果你还记得在配置公钥密钥时候的那几篇文章，理解DKIM就会方便很多。我们使用我们的秘钥加密邮件(header以及contents)，然后将加密后的值保存在一个DKIM-Signature结构中附加在Mail Header中，DKIM是独立于SMTP的，邮件最后会通过管理DKIM的软件所监听的端口进行签名，亦即插入DKIM-Signature记录，如果我们在Gmail中查看邮件的具体信息（下拉菜单中使用show original），我们可以清楚的看到这条记录位于邮件头中(下图倒数第二条)：
 
 <pre><code class="Bash">Delivered-To: yifan.yang9@gmail.com
 Received: by 10.140.97.199 with SMTP id m65csp161044qge;
@@ -254,14 +254,16 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=legato.ninja; s=mail;
 Received: by mail-ig0-f176.google.com with SMTP id l13so4021635iga.15
         for <yifan.yang9@gmail.com>; Sun, 14 Dec 2014 06:14:55 -0800 (PST)</code></pre>
 
-其中<span style="background-color: #084B8A"><font color="white"> b</font></span>字段记录了加密的内容。收件人则会通过一个DNS请求来获得公钥进行解密，具体的步骤是通过<span style="background-color: #084B8A"><font color="white"> s</font></span>字段的selector以及<span style="background-color: #084B8A"><font color="white"> d</font></span>字段的domain来发起DNS（TXT）请求，而应答中会包含公钥。然后进行内容解密，查实，来确认这封邮件的确从认证域名发出。
+其中<span style="background-color: #084B8A"><font color="white"> b</font></span>字段记录了由发送方加密的内容。收件人则会通过一个DNS请求来获得公钥进行解密，具体的步骤是通过<span style="background-color: #084B8A"><font color="white"> s</font></span>字段的selector以及<span style="background-color: #084B8A"><font color="white"> d</font></span>字段的domain来发起DNS（TXT）请求，而应答中会包含公钥。然后进行内容解密，查实，来确认这封邮件的确从认证域名发出。
 
 
 具体的配置我建议参考这篇组织良好的<a href="http://seasonofcode.com/posts/setting-up-dkim-and-srs-in-postfix.html">文章</a>，但是需要注意的是该文章中的DNS TXT记录部分设置有误，使用FQDN时不能忘记最后的dot，可参考<a href="https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-dkim-with-postfix-on-debian-wheezy">这篇文章</a>对DNS的设置。
 
 至此，邮件服务搭建完成．
 
-<a href="http://seasonofcode.com/posts/custom-domain-e-mails-with-postfix-and-gmail-the-missing-tutorial.html">Reference#1: Season of Code by cji</a><br></br><a href="http://www.e-rave.nl/create-a-self-signed-ssl-key-for-postfix">Reference#2: Mark's BLog </a>
+<a href="http://seasonofcode.com/posts/custom-domain-e-mails-with-postfix-and-gmail-the-missing-tutorial.html">Reference#1: Season of Code by cji</a>，
+
+<a href="http://www.e-rave.nl/create-a-self-signed-ssl-key-for-postfix">Reference#2: Mark's BLog </a>
 
 Cheers,
 @stevenyfy
