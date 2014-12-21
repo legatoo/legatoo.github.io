@@ -215,8 +215,53 @@ root      1257  0.0  0.1  25344  1700 ?        Ss   Dec14   0:02 /usr/lib/postfi
 
 配置成功后在可以把自己邮箱设置为默认发送邮箱，这样就完成了邮件发送部分的配置。
 
-<a href="http://seasonofcode.com/posts/custom-domain-e-mails-with-postfix-and-gmail-the-missing-tutorial.html">Reference#1</a>,
-<a href="http://www.e-rave.nl/create-a-self-signed-ssl-key-for-postfix">Reference#2</a>
+
+##防止被识别为垃圾邮件
+
+完成这一部分的配置后，你会发现经由你发出的邮件头中出现了新的内容，如下：
+<p><img src="{{site.baseurl}}public/img/image/DKIM_SRS.png"/></p>
+
+同时在这个非常友好的<a href="http://www.mail-tester.com/">测试网站</a>中也能取得高分:
+<p><img src="{{site.baseurl}}public/img/image/Mail_Security_Check.png"/></p>
+
+还记得我们将服务器配置成了一台帮助Gmail进行转发的MTA吗？是的，整个互联网中充满了这样的转发服务器，他们代表着发送者进行邮件的转发，我们已经配置了SASL验证来避免我们的relay服务器被其他人使用，这是好的。但是我们的邮箱依然有可能被别人伪造来进行钓鱼攻击(<a href="https://support.google.com/mail/answer/8253?hl=en">phishing</a>)，因此我们需要采取必要的措施允许收件人验证邮件的确由我发出，这里使用到了<a href="http://en.wikipedia.org/wiki/DomainKeys_Identified_Mail">DKIM</a>
+
+如果你还记得在配置公钥密钥时候的那几篇文章，理解DKIM就会方便很多。我们使用我们的秘钥加密邮件(header以及contents)，然后将加密后的值保存在一个DKIM-Signature结构中附加在Mail Header中，DKIM是独立于SMTP的，邮件最后会通过管理DKIM的软件所监听的端口进行签名，亦即插入DKIM-Signature记录，如果我们在Gmail中查看邮件的具体信息（下来菜单中使用show original），我们可以清楚的看到这条记录(下图倒数第二条)：
+
+<pre><code class="Bash">Delivered-To: yifan.yang9@gmail.com
+Received: by 10.140.97.199 with SMTP id m65csp161044qge;
+        Sun, 14 Dec 2014 06:15:27 -0800 (PST)
+X-Received: by 10.236.70.70 with SMTP id o46mr18757082yhd.191.1418566527120;
+        Sun, 14 Dec 2014 06:15:27 -0800 (PST)
+Return-Path: <me@legato.ninja>
+Received: from legato.ninja (legato.ninja. [104.236.3.63])
+        by mx.google.com with ESMTP id i66si2938819yhq.145.2014.12.14.06.15.26
+        for <yifan.yang9@gmail.com>;
+        Sun, 14 Dec 2014 06:15:26 -0800 (PST)
+Received-SPF: pass (google.com: domain of me@legato.ninja designates 104.236.3.63 as permitted sender) client-ip=104.236.3.63;
+Authentication-Results: mx.google.com;
+       spf=pass (google.com: domain of me@legato.ninja designates 104.236.3.63 as permitted sender) smtp.mail=me@legato.ninja;
+       dkim=pass header.i=@legato.ninja
+Received: from mail-ig0-f176.google.com (mail-ig0-f176.google.com [209.85.213.176])
+	by legato.ninja (Postfix) with ESMTPSA id F20BC144E39
+	for <yifan.yang9@gmail.com>; Sun, 14 Dec 2014 09:14:55 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=legato.ninja; s=mail;
+	t=1418566496; bh=qiS/yt1TWHlEjtVeGqJOO42mPKrn6L0OMAupfmIZoGw=;
+	h=Date:Subject:From:To:From;
+	b=ESgslZ7IFbRx36ssnZJxb5FAPFFxb9IjxGv5sgO4K+80hil3B/T+665Su8AaO6agM
+	 A0aG2bf0BGw2mI/682SpMZ1lpwjaMLQS4M0bRhxXSqYRcoAkP6KhbK7TRaeQ6HsXbi
+	 igix2Jh31PSU7rdhUGo7CXW1C+6RMumQM2vH7k9Q=
+Received: by mail-ig0-f176.google.com with SMTP id l13so4021635iga.15
+        for <yifan.yang9@gmail.com>; Sun, 14 Dec 2014 06:14:55 -0800 (PST)</code></pre>
+
+其中<span style="background-color: #084B8A"><font color="white"> b</font></span>字段记录了加密的内容。收件人则会通过一个DNS请求来获得公钥进行解密，具体的步骤是通过<span style="background-color: #084B8A"><font color="white"> s</font></span>字段的selector以及<span style="background-color: #084B8A"><font color="white"> d</font></span>字段的domain来发起DNS（TXT）请求，而应答中会包含公钥。然后进行内容解密，查实，来确认这封邮件的确从认证域名发出。
+
+
+具体的配置我建议参考这篇组织良好的<a href="http://seasonofcode.com/posts/setting-up-dkim-and-srs-in-postfix.html">文章</a>，但是需要注意的是该文章中的DNS TXT记录部分设置有误，使用FQDN时不能忘记最后的dot，可参考<a href="https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-dkim-with-postfix-on-debian-wheezy">这篇文章</a>对DNS的设置。
+
+至此，邮件服务搭建完成．
+
+<a href="http://seasonofcode.com/posts/custom-domain-e-mails-with-postfix-and-gmail-the-missing-tutorial.html">Reference#1: Season of Code by cji</a><br></br><a href="http://www.e-rave.nl/create-a-self-signed-ssl-key-for-postfix">Reference#2: Mark's BLog </a>
 
 Cheers,
 @stevenyfy

@@ -8,8 +8,8 @@ relative_permalinks: true
 
 # Setup
 title:            Steven's Blog
-tagline:          '--- I know too many Stevens.'
-description:      'Too Much Love Will Kill You.'
+tagline:          'Sincerely'
+description:      '信仰在呼唤'
 url:              http://legato.ninja
 baseurl:          http://legato.ninja/
 # baseurl:           /
