@@ -169,7 +169,8 @@ mv cacert.pem /etc/ssl/certs/</code></pre>
 
 
 完成认证相关的步骤，修改Postfix配置文件
-<pre><code class="Bash">postconf -e 'smtpd_use_tls = yes'
+<pre><code class="Bash">＃Those are commands, contents in quotes will be put in /etc/postfic/main.cf accordingly
+postconf -e 'smtpd_use_tls = yes'
 postconf -e 'smtpd_tls_auth_only = no'
 postconf -e 'smtpd_tls_key_file = /etc/ssl/private/example.com.key'
 postconf -e 'smtpd_tls_cert_file = /etc/ssl/certs/example.com.crt'
