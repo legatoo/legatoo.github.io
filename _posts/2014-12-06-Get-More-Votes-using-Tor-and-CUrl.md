@@ -19,7 +19,6 @@ Anonymous is mixed blessing for sure. In the world of Internet, people are much 
 
 Tor has to be make sure running successfully in your machine to gain anonymous. Using the command line below to install Tor and Privoxy.
 
-<a href="http://legato.ninja/2014/12/06/Get-More-Votes-using-Tor-and-CUrl/"><font color="green">Read This Article</font></a>
 <!--more-->
 
 

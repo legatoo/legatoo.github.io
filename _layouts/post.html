@@ -7,13 +7,4 @@ layout: default
   <span itemprop="datePublished" class="post-date">{{ page.date | date_to_string }}</span>
   {{ content }}
 
-  <div class="entry">
-    {% if excerpt and post.excerpt %}
-      {{ post.excerpt }}
-      <p> <a href="{{ post.url }}/#more" class="more-link"><span class="readmore">Read This Article -></span></a></p>
-    {% else %}
-      {{ post.content | mark_excerpt }}
-    {% endif %}
-  </div>
-  
 </div>
