@@ -31,12 +31,12 @@ peets.mpk.ca.us. IN MX 10 realy.hp.com
 回到邮件的发送，现在通过DNS查询，在MTA邮件查明了将发往何处。然后MTA将会通过SMTP协议将邮件转发到该MX服务器。被MX接受的邮件下一步会被转发到MDA (Mail Delivery Agent)，通过它邮件将会被分发存往对应用户的邮箱里面。现在邮件的接收者就可以通过邮件管理工具去提取自己的邮件了，邮件提取使用到的协议主要有IMAP (Internet Message Access Protocol) 和 POP3 (Post Office Protocol)。
 
 更多内容, 参考<a href="https://en.wikipedia.org/wiki/Simple_Mail_Transfer_Protocol">Wikipedia</a>
-
+<span id="more"></span>
 下面进入正式的配置。
 <br></br>
 
 <!--more-->
-<span id="more"></span>
+
 
 ##&#9824;&nbsp;&nbsp;准备工作
 

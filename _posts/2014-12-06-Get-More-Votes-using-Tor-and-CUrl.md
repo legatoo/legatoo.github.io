@@ -16,11 +16,10 @@ Anonymous is mixed blessing for sure. In the world of Internet, people are much 
 ><a href="https://www.torproject.org/about/overview.html.en">What is Tor?</a>
 
 >Tor is a network of virtual tunnels that allows people and groups to improve their privacy and security on the Internet.
-
+<span id="more"></span>
 Tor has to be make sure running successfully in your machine to gain anonymous. Using the command line below to install Tor and Privoxy.
 
 <!--more-->
-<span id="more"></span>
 
 <pre><code class="Bash">sudo apt-get install tor privoxy</code></pre>
 
