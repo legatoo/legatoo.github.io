@@ -8,10 +8,4 @@ module Jekyll
             }))
     end
   end
-  # 
-  # module Filters
-  #   def mark_excerpt(content)
-  #     content.gsub('<!--more-->', '<p><span id="more"></span></p>')
-  #   end
-  # end
 end

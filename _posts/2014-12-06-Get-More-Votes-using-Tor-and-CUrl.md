@@ -20,7 +20,7 @@ Anonymous is mixed blessing for sure. In the world of Internet, people are much 
 Tor has to be make sure running successfully in your machine to gain anonymous. Using the command line below to install Tor and Privoxy.
 
 <!--more-->
-
+<span id="more"></span>
 
 <pre><code class="Bash">sudo apt-get install tor privoxy</code></pre>
 
