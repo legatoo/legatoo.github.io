@@ -12,7 +12,7 @@ tagline:          'Sincerely'
 description:      '黑色向阳花'
 url:              http://legato.ninja
 baseurl:          http://legato.ninja/
-# excerpt_separator: <!--more-->
+excerpt_separator: <!--more-->
 # baseurl:           /
 
 
