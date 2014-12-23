@@ -19,7 +19,7 @@ title: Home
     {{ post.excerpt }}
     <p> <a href="{{ post.url }}/#more" class="more-link"><span    class="readmore">Read the rest of this entry »</span></a></p>
   {% else %}
-    {{ post.content }}
+    {{ post.content | mark_excerpt }}
   {% endif %}
 
   </div>
