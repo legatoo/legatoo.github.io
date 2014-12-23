@@ -17,7 +17,11 @@ Anonymous is mixed blessing for sure. In the world of Internet, people are much 
 
 >Tor is a network of virtual tunnels that allows people and groups to improve their privacy and security on the Internet.
 
-Tor has to be make sure running successfully in your machine to gain anonymous. Using the commandline below to install Tor and Privoxy.
+Tor has to be make sure running successfully in your machine to gain anonymous. Using the command line below to install Tor and Privoxy.
+
+<a href="http://legato.ninja/2014/12/06/Get-More-Votes-using-Tor-and-CUrl/"><font color="green">Read This Article</font></a>
+<!--more-->
+
 
 <pre><code class="Bash">sudo apt-get install tor privoxy</code></pre>
 

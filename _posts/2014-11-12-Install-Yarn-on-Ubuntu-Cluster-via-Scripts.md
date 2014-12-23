@@ -88,6 +88,9 @@ student73:  05:37:06 up 1 day,  4:22,  1 user,  load average: 1.11, 1.15, 1.19
 
 since I configured hostname in my `gender` file[/etc/genders], I can use `-a` to let pdsh resolve the hosts automatically. Check [this](https://computing.llnl.gov/linux/genders.html) for more.
 
+<a href="http://legato.ninja/2014/11/12/Install-Yarn-on-Ubuntu-Cluster-via-Scripts/"><font color="green">Read This Article</font></a>
+<!--more-->
+
 ###5. Grant Permission to Yarn User
 Some operstions in the scripts require more privileges. In order to eliminate input passowrd again and again in the install progress. (Actually, `pdsh` doesn't redirect input from remote node, which makes it impossible to input password for remote node.)  We need to grant super privileges: sudo operations without password, for `ynuser` on every node. You can simply change it back after installation.
 

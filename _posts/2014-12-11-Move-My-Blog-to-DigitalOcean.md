@@ -5,9 +5,10 @@ title: Move My Blog to DigitalOcean
 
 Now, this blog is hosting in DigitalOcean.
 
-<!-- <img class="freezeframe" src="{{site.baseurl}}public/img/gif/wave.gif"/> -->
+<a href="http://legato.ninja/2014/12/11/Move-My-Blog-to-DigitalOcean/"><font color="green">Read This Article</font></a>
+<!--more-->
 
-<iframe width="100%" height="166" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/30580962&amp;color=ff5500&amp;auto_play=true&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false"></iframe>
+<img class="freezeframe" src="{{site.baseurl}}public/img/gif/wave.gif"/>
 
 Cheers,<br>
 <a href="https://twitter.com/stevenyfy"><font color="green">@stevenyfy</font></a>
