@@ -35,6 +35,8 @@ peets.mpk.ca.us. IN MX 10 realy.hp.com
 下面进入正式的配置。
 <br></br>
 
+<!--more-->
+
 ##&#9824;&nbsp;&nbsp;准备工作
 
 为了搭建自己的邮件系统，后面的内容默认你已经具备了以下的条件
