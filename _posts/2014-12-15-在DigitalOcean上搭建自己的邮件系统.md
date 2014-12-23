@@ -35,7 +35,7 @@ peets.mpk.ca.us. IN MX 10 realy.hp.com
 下面进入正式的配置。
 <br></br>
 
-<a href="http://legato.ninja/2014/12/15/%E5%9C%A8DigitalOcean%E4%B8%8A%E6%90%AD%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E9%82%AE%E4%BB%B6%E7%B3%BB%E7%BB%9F/"><font color="green">Read This Article</font></a>
+<!-- <a href="http://legato.ninja/2014/12/15/%E5%9C%A8DigitalOcean%E4%B8%8A%E6%90%AD%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E9%82%AE%E4%BB%B6%E7%B3%BB%E7%BB%9F/"><font color="green">Read This Article</font></a> -->
 <!--more-->
 
 ##&#9824;&nbsp;&nbsp;准备工作
