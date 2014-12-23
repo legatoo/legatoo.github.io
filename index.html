@@ -16,7 +16,7 @@ title: Home
 
   {% if post.excerpt %}
     {{ post.excerpt }}
-    <p> <a href="{{ post.url }}"><span>Read the rest of this article »</span></a></p>
+    <p> <a href="{{ post.url }}#more"><span>Read the rest of this article »</span></a></p>
   {% else %}
     {{ post.content }}
   {% endif %}
