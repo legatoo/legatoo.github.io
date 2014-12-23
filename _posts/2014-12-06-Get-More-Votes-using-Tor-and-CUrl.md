@@ -68,7 +68,6 @@ Next Step is easy, just construct this POST, the code is below:
 
 <pre><code class="Bash">python vote.py</code></pre>
 
-Cheers.
 
-
-@stevenyfy
+Cheers,<br>
+<a href="https://twitter.com/stevenyfy"><font color="green">@stevenyfy</font></a>

@@ -262,9 +262,8 @@ Received: by mail-ig0-f176.google.com with SMTP id l13so4021635iga.15
 
 至此，邮件服务搭建完成．
 
-<a href="http://seasonofcode.com/posts/custom-domain-e-mails-with-postfix-and-gmail-the-missing-tutorial.html">Reference#1: Season of Code by cji</a>，
-
+<a href="http://seasonofcode.com/posts/custom-domain-e-mails-with-postfix-and-gmail-the-missing-tutorial.html">Reference#1: Season of Code by cji</a>,<br>
 <a href="http://www.e-rave.nl/create-a-self-signed-ssl-key-for-postfix">Reference#2: Mark's BLog </a>
 
-Cheers,
-@stevenyfy
+Cheers,<br>
+<a href="https://twitter.com/stevenyfy"><font color="green">@stevenyfy</font></a>

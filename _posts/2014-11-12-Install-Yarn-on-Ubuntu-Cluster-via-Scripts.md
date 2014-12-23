@@ -256,6 +256,7 @@ For <a name="uninstall"><font color="black">Uninstall</font></a><sup><a href="#f
 
 Thank you for reading.
 
-@stevenyfy
+Sincerely,<br>
+<a href="https://twitter.com/stevenyfy"><font color="green">@stevenyfy</font></a>
 
 <meta itemprop="url" content="http://legato.ninja/2014/11/12/Install-Yarn-on-Ubuntu-Cluster-via-Scripts/">

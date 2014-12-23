@@ -134,5 +134,5 @@ Lisa不是没有宗教信仰, 实际上她出生不久就被注册成为了一�
 
 还有大量的图片都在facebook。
 
-Thanks,
-@stevenyfy
+Sincerely,<br>
+<a href="https://twitter.com/stevenyfy"><font color="green">@stevenyfy</font></a>
