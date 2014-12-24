@@ -32,11 +32,11 @@ peets.mpk.ca.us. IN MX 10 realy.hp.com
 
 更多内容, 参考<a href="https://en.wikipedia.org/wiki/Simple_Mail_Transfer_Protocol">Wikipedia</a>
 <span id="more"></span>
+
 下面进入正式的配置。
 <br></br>
 
 <!--more-->
-
 
 ##&#9824;&nbsp;&nbsp;准备工作
 
@@ -270,3 +270,5 @@ Received: by mail-ig0-f176.google.com with SMTP id l13so4021635iga.15
 
 Cheers,<br>
 <a href="https://twitter.com/stevenyfy"><font color="green">@stevenyfy</font></a>
+
+<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">Creative Commons Attribution-NonCommercial 4.0 International License</a>.
