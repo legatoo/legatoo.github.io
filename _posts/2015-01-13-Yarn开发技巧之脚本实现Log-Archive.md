@@ -55,7 +55,7 @@ log4j.logger.org.apache.hadoop.yarn.server.api.impl.pb.client=DEBUG,console
 
 基本效果有：
 
-1. 关闭集群时，将该次日志内容保存到<span style="background-color: #084B8A"><font color="white">${HADOOP_LOG_DIR}/`xx_log_archive`</font></span>中，并且自动生成version号码
+1. 关闭集群时，将该次日志内容保存到<span style="background-color: #084B8A"><font color="white">${HADOOP_LOG_DIR}/xx_log_archive</font></span>中，并且自动生成version号码
 2. 开启集群时，清空上次的相关日志内容。
 
 脚本全文可以在这里<a href="https://gist.github.com/legatoo/bf8bca91ad6886512500">下载</a>，下面对其中几个地方做一解释，也方便自己回顾学习。
