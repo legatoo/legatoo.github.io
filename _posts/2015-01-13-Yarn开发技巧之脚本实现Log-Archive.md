@@ -40,13 +40,13 @@ title: Yarn开发技巧之脚本实现Log Archive
 
 如果将这里的INFO修改成为DEBUG，全局的调试信息都可以看到。当然过多的调试信息有时候也会让你迷惑，因此你会需要更加细粒度的控制，通过修改/添加一下的语句：
 
-<pre><code class="TXT">log4j.logger.org.apache.hadoop.yarn.server.resourcemanager=DEBUG,console
+<pre><code class="Bash">log4j.logger.org.apache.hadoop.yarn.server.resourcemanager=DEBUG,console
 log4j.logger.org.apache.hadoop.yarn.server.nodemanager=DEBUG,console
 log4j.logger.org.apache.hadoop.yarn.server.api.impl.pb.service=DEBUG,console
 log4j.logger.org.apache.hadoop.yarn.server.api.impl.pb.client=DEBUG,console
 </code></pre>
 
-通过将具体的类或者包添加进来，我开启了（如上）：`nodemanager`, `resourcemanager`, `ipc` 相关类的DEBUG级别。你可以设置更过的具体类/包进来。
+通过将具体的类或者包添加进来，我开启了（如上）：nodemanager, resourcemanager, ipc 相关类的DEBUG级别。你可以设置更过的具体类/包进来。
 
 
 ##&#9824;&nbsp;&nbsp;编写脚本实现Log Archive
@@ -55,7 +55,7 @@ log4j.logger.org.apache.hadoop.yarn.server.api.impl.pb.client=DEBUG,console
 
 基本效果有：
 
-1. 关闭集群时，将该次日志内容保存到<span style="background-color: #084B8A"><font color="white">${HADOOP_LOG_DIR}/`xx_log_archive`</font></span>中，并且自动生成`version`号码
+1. 关闭集群时，将该次日志内容保存到<span style="background-color: #084B8A"><font color="white">${HADOOP_LOG_DIR}/`xx_log_archive`</font></span>中，并且自动生成version号码
 2. 开启集群时，清空上次的相关日志内容。
 
 脚本全文可以在这里<a href="https://gist.github.com/legatoo/bf8bca91ad6886512500">下载</a>，下面对其中几个地方做一解释，也方便自己回顾学习。
