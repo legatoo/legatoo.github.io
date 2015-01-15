@@ -101,7 +101,14 @@ if [ -f "$rm_logfile_name" ]; then
             lastRunFileName=${lastRunLogFullName%.*}
             IFS='-' read -ra ARRAY <<<  "$lastRunFileName"
             preVersion=${ARRAY[@]:(-1)}
-            newVersion=$((preVersion+1))
+
+            # Remove leading zero
+            preVersionToDigital=${preVersion#0}
+
+            # Convert to base-10, and do add operation
+            ((newVersion=10#$preVersionToDigital+1));
+
+            # Add leading zero
             padding_newVersion=$(printf "%03d" $newVersion)
             newLogFileName="$rm_log_basename""$padding_newVersion"'.'"$extension"
             cat "$rm_logfile_name" > "$rm_logfile_location"/"$newLogFileName"
@@ -115,7 +122,12 @@ fi
 
 还有在脚本中我使用了<span style="background-color: #084B8A"><font color="white"> [[ </font></span>和<span style="background-color: #084B8A"><font color="white"> [ </font></span>，两种用来做条件判断的句式。其中单个<span style="background-color: #084B8A"><font color="white"> [ </font></span>是bash builtin，会顺次读取其中的语句，以空格隔开，倘若一个变量中拥有空格，但是没有用双引号扩起来，那么<span style="background-color: #084B8A"><font color="white"> [ </font></span>读入后可能就会被错误解析。而<span style="background-color: #084B8A"><font color="white"> [[ </font></span>是一个keyword，具有更好的解析能力，详细请见<a href="http://mywiki.wooledge.org/BashGuide/TestsAndConditionals#Conditional_Blocks_.28if.2C_test_and_.5B.5B.29">这里</a>.
 
-最后会在脚本中发现几段自动编号的代码，我也是觉得Bash真的好神奇。
+最后会在脚本中发现几段自动编号的代码，其中需要注意的是String转数字并且在加一的操作。之前没有注意，遇到的问题是在<span style="background-color: #084B8A"><font color="white">008</font></span>之后就出现<span style="background-color: #084B8A"><font color="white">value too great for base</font></span>这样的错误，也就是不能到009去了。我第一次遇到这样的问题，原因如下。
+
+> Numerical values starting with a zero (0) are interpreted as numbers in octal notation by the C language. As the only digits allowed in octal are {0..7}, an 8 or a 9 will cause the evaluation to fail
+
+
+因此需要先去头部0，转换位十进制，然后做加法，然后填头部零。Bash真的好神奇。
 
 
 Sincerely,<br>
