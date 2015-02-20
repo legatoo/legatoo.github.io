@@ -81,7 +81,6 @@ using the command below to test pdsh
 or, using the node number range, eg. operate on node#1 to node#19:
 
 <pre><code class="Bash">pdsh -w node[1-19] uptime
-#note: no space(s) between hostnames
 </code></pre>
 
 the output will look like this:
