@@ -33,6 +33,9 @@ title: Guava Collection Zero To Hero Part Two
 List&#60;Integer&#62; nodeIds = Lists.transform(nodes, idExtractor);</code></pre>
 
 使用的语法是非常简单的，但是这背后有一些注意的事项，甚至是隐藏的陷阱。
+
+<!--more-->
+
 ####1.1 返回的仅仅是个Lazy的View
 最容易犯的错误就是认为上面得到的结果 nodeIds是一个和我们在堆上分配的List一样的东西，但事实是，它不是的。更加准确的说，他甚至还不是他自己。为什么这么说呢？Lists是一个包含若干工具方法的类，可以理解为是博文Part One里面提到的组装场地，在这里数据和逻辑相互作用，具体的，transform方法会返回一个Guava自定义的List, 这种List并不会重新开辟内存来保存transform的返回值，它的内部仅仅保存了一个指向传入数据的引用，其get方法返回Function作用后的结果。当你用迭代器迭代这个List（包括foreach）的时候，会产生一个自定义的iterator：TransformedListIterator。这个iterator的next()返回被Function作用后的结果，迭代器禁用了set和add方法。他扩展了AbstractList，但并没有自己实现add和set方法，所以这两种操作也不被支持。总结一下：
 
