@@ -95,3 +95,6 @@ DEPENDENCIES
   jekyll-mentions
   jekyll-multiple-languages-plugin
   jekyll-swfobject
+
+BUNDLED WITH
+   1.10.2

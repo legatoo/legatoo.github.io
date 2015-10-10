@@ -9,11 +9,11 @@ relative_permalinks: true
 # Setup
 title:            Steven's Blog
 tagline:          'Sincerely'
-description:      '理性是人类灵魂中最高贵的因素'
+description:      '种一棵树的最好时间是十年前, 其次是现在'
 url:              http://legato.ninja
-baseurl:          http://legato.ninja/
+# baseurl:          http://legato.ninja/
 # excerpt_separator: <!--more-->
-# baseurl:           /
+baseurl:           /
 
 
 author:
