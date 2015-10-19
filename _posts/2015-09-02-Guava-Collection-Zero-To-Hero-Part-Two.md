@@ -171,6 +171,41 @@ public Set&#60;V&#62; get(final K key) {
     }</code></pre>
 
 
+###3. Iterables工具集
+Iterables工具集提供了一些暗黑小科技，可以在一定程度上简化我们的开发工作。假设我们操作的数据来自多个数据源，但是在最后处理的过程中，希望用一次遍历，那么我们可以使用<span style="background-color: #D8D8D8"><font color="black">Iterables.contact</font></span>，返回的结果是链接了若干个Iterable的集合的lazy view，并没有开辟新的空间，然后我们就可以使用一次迭代完成对若干个集合的遍历了。
+<pre><code class="Java">ImmutableList&#60;Integer&#62; immutableList1 = ImmutableList.of(1, 2, 3, 4);
+ImmutableList&#60;Integer&#62; immutableList2 = ImmutableList.of(1, 2, 3, 4);
+Iterable&#60;Integer&#62; immutableListConcat = Iterables.concat(immutableList1, immutableList2);
+Iterator&#60;Integer&#62; immutableIterator = immutableListConcat.iterator();
+while (immutableIterator.hasNext()){
+    if (immutableIterator.next() == 1 ) {
+        immutableIterator.remove(); //unsupported operation
+    }
+}</code></col></pre>
+注意到concat的结果集合具有和原集合相同的mutability，上面代码的异常是因为原始集合immutable造成的。由于contact返回的是一个lazy的view，意味着即使你在concat之后对原集合进行的修改，这种修改在你真正遍历concat结果的时候都会反映出来。除此之外，Iterables集合还有几个顺手的小工具：
+
++ <span style="background-color: #D8D8D8"><font color="black">Iterables.frequency(Iterable&#60;?&#62; iterable, @Nullable Object element)</font></span>，计算某个元素在Iterables中出现的次数；
++ <span style="background-color: #D8D8D8"><font color="black">Iterables.partition(final Iterable&#60;T&#62; iterable, final int size)</font></span>，把Iterables按照指定的大小分组，例如一个包含5个元素的集合，按2分组，则会得到[0, 1], [2, 3], [4]的三个集合;
++ <span style="background-color: #D8D8D8"><font color="black">elementsEqual(Iterable&#60;?&#62; iterable1, Iterable&#60;?&#62; iterable2)</font></span>，判断两个集合是否包含同样的元素，按照同样的顺序
+
+Guava还提供了一个在Java8才能使用的Streaming方式，当然，由于Guava的函数式变成支持并不是是非彻底，所以Guava提供的Streaming并没有Java8强大，但是，始终，在大量项目嗨停留在java6/7的阶段，Guava的Streaming方式还是可以给代码带来令人愉快的变化。GuavaG是通过<span style="background-color: #D8D8D8"><font color="black">FluentIterable</font></span>这个类来实现类Streaming编程的。举个简单的例子来展示FluentIterable：
+<pre><code class="java">Predicate&#60;Student&#62; chineseMale = new Predicate&#60;Student&#62;() {
+    public boolean apply(Student input) {
+        return Gender.MALE.equals(input.getGender()) && CountryEnum.CHINA.equals(input.getCountry());
+    }
+};
+Function&#60;Student, String&#62; getName = new Function&#60;Student, String&#62;() {
+    public String apply(Student input) {
+        return input.getName();
+    }
+};
+//获得所有来自中国的男同学的名字，取前三个并按照字母序排列
+List&#60;String&#62; nameList = FluentIterable.from(students).filter(chineseMale).transform(getName).toSortedList(Ordering.&#60;String&#62;natural());</code></pre>
+
+是不是有种很流畅的感觉。而且返回的值是lazy的，只有你真正使用它的时候才会计算。
+
+
+
 未完待续...
 
 
