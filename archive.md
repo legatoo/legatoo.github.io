@@ -1,8 +1,7 @@
 ---
-layout: page
 title: Archive
+layout: page
 ---
-
 
 <section id="archive">
   <h2>This year</h2>

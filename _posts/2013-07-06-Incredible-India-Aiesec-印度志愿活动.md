@@ -1,6 +1,7 @@
 ---
-layout: post
 title: Incredible India, AIESEC 印度志愿活动
+date: 2013-07-06 00:00:00 Z
+layout: post
 ---
 
 >This is the report I submitted to AIESEC after my India Volunteer Trip. I miss that place, I had great time there.

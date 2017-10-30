@@ -1,7 +1,9 @@
 ---
-layout: post
 title: Guava Collection Zero To Hero Part One
+date: 2015-09-28 00:00:00 Z
+layout: post
 ---
+
 好长时间都没有更新这里了。所以说学生时代还是最好的时间嘛，晚睡晚起，想写就写。闲话少说了，这篇博客主要介绍下最近使用Guava的一些特性，集中在最常使用的Collection部分，希望通过正确使用Google Guava，美化Java代码，提高可读性，可维护性。在Part One里面会主要介绍Guava的背景和顺畅使用Collection所必须的一些前置知识。
 
 ##一些Guava的背景

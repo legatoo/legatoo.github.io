@@ -1,7 +1,9 @@
 ---
-layout: post
 title: Guava Collection Zero To Hero Part Two
+date: 2015-10-06 00:00:00 Z
+layout: post
 ---
+
 第二部分主要展示Guava Collection的使用，从实际用例出发。
 
 ##Guava Collection Use Case

@@ -1,6 +1,7 @@
 ---
-layout: post
 title: Install Yarn on Ubuntu Cluster via Scripts
+date: 2014-11-12 00:00:00 Z
+layout: post
 ---
 
 Few months ago, I took a class about Cloud Computing, which is the very first time I have chance to know Hadoop. Cloud Computing sounds beautiful, but in order to build this magic cloud, hard works have to be done. When I was doing course project for that class, I felt extremely boring and tired to login every node and configure something (I didn't realize I can use some tools to simplify the work). It is this reason that pushes me to find another way to build the cloud.

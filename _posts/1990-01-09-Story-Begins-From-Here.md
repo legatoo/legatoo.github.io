@@ -1,6 +1,7 @@
 ---
-layout: post
 title: Story Begins From Here
+date: 1990-01-09 00:00:00 Z
+layout: post
 ---
 
 <img class="freezeframe" src="{{site.baseurl}}public/img/gif/giphy_life.gif"/>

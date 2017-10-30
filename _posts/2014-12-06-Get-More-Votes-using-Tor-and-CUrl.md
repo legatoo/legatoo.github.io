@@ -1,6 +1,7 @@
 ---
-layout: post
 title: Get More Votes using Tor and CUrl
+date: 2014-12-06 00:00:00 Z
+layout: post
 ---
 
 >The method in this article is for helping my friend in an not important contest. Even though, I feel really bad, I highly recommand no body use it in important things to hurt fairness.

@@ -1,6 +1,7 @@
 ---
-layout: post
 title: Move My Blog to DigitalOcean
+date: 2014-12-11 00:00:00 Z
+layout: post
 ---
 
 Now, this blog is hosting in DigitalOcean.
